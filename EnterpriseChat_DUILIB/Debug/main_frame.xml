@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window size="280,600" sizebox="4,4,4,4" caption="0,0,0,40" mininfo="200,300" roundcorner="4,4">
+    <Font name="微软雅黑" size="12" bold="false" italic="false" default="true" />
+    <Font name="微软雅黑" size="12" bold="true" italic="false" />
+    <Default name="VScrollBar" value="button1normalimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;0,0,16,16&apos;&quot; button1hotimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;16,0,32,16,16&apos;&quot; button1pushedimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;32,0,48,16&apos;&quot; button2normalimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;0,32,16,48&apos;&quot; button2hotimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;16,32,32,48&apos;&quot; button2pushedimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;32,32,48,48&apos;&quot; thumbnormalimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;0,48,16,64&apos; corner=&apos;0,2,0,2&apos;&quot; thumbhotimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;16,48,32,64&apos; corner=&apos;0,2,0,2&apos;&quot; thumbpushedimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;32,48,48,64&apos; corner=&apos;0,2,0,2&apos;&quot; bknormalimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;0,16,16,32&apos;&quot;" />
+    <HorizontalLayout name="bg" bkimage="file=&apos;bg0.png&apos; corner=&apos;600,200,1,1&apos;">
+        <VerticalLayout bkimage="file=&apos;border.png&apos; corner=&apos;5,5,5,5&apos;" inset="1,0,1,1">
+			<!--第一部分，Echat，系统按钮  -->
+            <HorizontalLayout height="22">
+                <VerticalLayout width="60">
+                    <Label text="EChat" float="true" pos="5,1,0,0" width="40" height="20" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" />
+                </VerticalLayout>
+                <VerticalLayout />
+                <VerticalLayout width="95">
+                    <Button name="minbtn" float="true" pos="0,0,0,0" width="28" height="19" maxheight="19" maxwidth="28" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file=&apos;btn_mini_normal.png&apos;" hotimage="btn_mini_highlight.png" pushedimage="btn_mini_down.png" />
+                    <Button name="maxbtn" float="true" pos="28,0,0,0" width="28" height="19" maxheight="19" maxwidth="28" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file=&apos;btn_max_normal.png&apos;" hotimage="btn_max_highlight.png" pushedimage="btn_max_down.png" />
+                    <Button name="restorebtn" visible="false" float="true" pos="28,0,0,0" width="28" height="19" maxheight="19" maxwidth="28" align="center" normalimage="file=&apos;btn_restore_normal.png&apos;" hotimage="btn_restore_highlight.png" pushedimage="btn_restore_down.png" />
+                    <Button name="closebtn" float="true" pos="56,0,0,0" width="39" height="19" maxheight="19" maxwidth="39" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file=&apos;btn_close_normal.png&apos;" hotimage="btn_close_highlight.png" pushedimage="btn_close_down.png" />
+                </VerticalLayout>
+            </HorizontalLayout>
+			<!-- 第二部分，头像，昵称 -->
+            <HorizontalLayout height="70">
+                <VerticalLayout width="70" inset="5,0,0,0">
+                    <Button name="pctojen" width="64" height="64" bkimage="file=&apos;man_big.png&apos;" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+                </VerticalLayout>
+                <VerticalLayout inset="5,0,0,0">
+                    <Label  name="pcname" text="" float="true" pos="5,15,0,0" width="200" height="36" textcolor="#ffffffff"/>
+                </VerticalLayout>
+            </HorizontalLayout>
+			<!-- 第三部分，搜索框 -->
+			<HorizontalLayout height="27">
+				<Button  visible="true" name="search_tip" height="27" textpadding="4,2,4,3" text="搜索联系人，群组" align="left" bkcolor="0xffffffff" />
+				<RichEdit visible="false" name="search_edit" inset="4,4,4,3" height="27" bkcolor="0xffffffff" text="搜索联系人，群组" multiline="false" rich="false" />
+				<Button name="searchbtn" showhtml="true" height="27" width="24"  bkcolor="0xffffffff" text="{i search_btn.png}{/i}"  />
+			</HorizontalLayout>
+			<!-- 第四部分，TAB控件 -->
+			<VerticalLayout bkimage="file='glow.png' corner='2,2,2,2'" inset="0,4,0,0" >
+				<HorizontalLayout height="26" padding="0, 0, 0, 0" inset="4,0,4,0">
+					<Option name="friendbtn" selected="true" group="true" text="联系人" selectedimage="file='tab_btn.png'" width="70" height="26" />
+					<Option name="groupbtn" group="true" text="群组" selectedimage="file='tab_btn.png'" width="70" height="26" />
+				</HorizontalLayout>
+				<!-- 第五部分列表框 -->
+				<TabLayout name="tabs" bkimage="file='list_bk.png'">
+					<HorizontalLayout>
+						<commonlist name="friends" header="hidden" itemshowhtml="true" vscrollbar="true" />
+					</HorizontalLayout>
+					<HorizontalLayout>
+						<commonlist name="groups" header="hidden" itemshowhtml="true" vscrollbar="true"  />
+					</HorizontalLayout>
+					</TabLayout>
+			</VerticalLayout>
+			<!-- 第六部分，留边 -->
+			<HorizontalLayout height="20">
+			</HorizontalLayout>
+        </VerticalLayout>
+    </HorizontalLayout>
+</Window>

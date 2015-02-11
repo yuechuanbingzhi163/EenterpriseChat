@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<Window size="600,450" sizebox="4,4,4,4" caption="0,0,0,40" mininfo="200,300" roundcorner="4,4">
+    <Font name="微软雅黑" size="12" bold="false" italic="false" default="true" />
+    <Font name="微软雅黑" size="12" bold="true" italic="false" />
+    <Default name="VScrollBar" value="button1normalimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;0,0,16,16&apos;&quot; button1hotimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;16,0,32,16,16&apos;&quot; button1pushedimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;32,0,48,16&apos;&quot; button2normalimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;0,32,16,48&apos;&quot; button2hotimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;16,32,32,48&apos;&quot; button2pushedimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;32,32,48,48&apos;&quot; thumbnormalimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;0,48,16,64&apos; corner=&apos;0,2,0,2&apos;&quot; thumbhotimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;16,48,32,64&apos; corner=&apos;0,2,0,2&apos;&quot; thumbpushedimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;32,48,48,64&apos; corner=&apos;0,2,0,2&apos;&quot; bknormalimage=&quot;file=&apos;scrollbar.png&apos; source=&apos;0,16,16,32&apos;&quot;" />
+    <HorizontalLayout name="bg" bkimage="file=&apos;bg0.png&apos; corner=&apos;600,200,1,1&apos;">
+        <VerticalLayout bkimage="file=&apos;border.png&apos; corner=&apos;5,5,5,5&apos;" inset="1,0,1,0">
+            <HorizontalLayout height="45">
+                <VerticalLayout width="48" inset="0,1,0,0">
+                    <Button name="logo" width="44" height="44" bkimage="file=&apos;man.png&apos; corner=&apos;5,5,5,5&apos;" maxheight="44" maxwidth="44" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+                </VerticalLayout>
+                <VerticalLayout inset="2,6,2,0">
+                    <Label name="nickname" text="tojen" width="200" height="36" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" font="2" />
+                </VerticalLayout>
+                <VerticalLayout>
+                    <Label name="description" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" visible="false" />
+                </VerticalLayout>
+                <VerticalLayout width="94">
+                    <Button name="minbtn" float="true" pos="0,0,0,0" width="28" height="19" maxheight="19" maxwidth="28" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file=&apos;btn_mini_normal.png&apos;" hotimage="btn_mini_highlight.png" pushedimage="btn_mini_down.png" />
+                    <Button name="maxbtn" float="true" pos="28,0,0,0" width="28" height="19" maxheight="19" maxwidth="28" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file=&apos;btn_max_normal.png&apos;" hotimage="btn_max_highlight.png" pushedimage="btn_max_down.png" />
+                    <Button name="restorebtn" visible="false" float="true" pos="28,0,0,0" width="28" height="19" maxheight="19" maxwidth="28" align="center" normalimage="file=&apos;btn_restore_normal.png&apos;" hotimage="btn_restore_highlight.png" pushedimage="btn_restore_down.png" />
+                    <Button name="closebtn" float="true" pos="56,0,0,0" width="39" height="19" maxheight="19" maxwidth="39" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file=&apos;btn_close_normal.png&apos;" hotimage="btn_close_highlight.png" pushedimage="btn_close_down.png" />
+                </VerticalLayout>
+            </HorizontalLayout>
+            <HorizontalLayout bkimage="file=&apos;jb.png&apos; corner=&apos;2,30,2,2&apos;">
+                <VerticalLayout>
+                    <HorizontalLayout bkimage="file=&apos;chat_mid_bk.png&apos; source=&apos;0,10,2,26&apos;" bordercolor="#FF999933" inset="5,0,0,0">
+                        <RichEdit name="view_richedit" multiline="true" vscrollbar="true" autovscroll="true" rich="true" readonly="true" />
+                    </HorizontalLayout>
+                    <HorizontalLayout name="fontbar" height="30" bkimage="file=&apos;font_bk.bmp&apos;" inset="4,4,4,4">
+                        <Combo name="font_type" text="微软雅黑" width="100" height="22" itemtextcolor="#FF000000" itemselectedtextcolor="#FF000000" itemselectedbkcolor="#FFC1E3FF" itemhottextcolor="#FF000000" itemhotbkcolor="#FFE9F5FF" itemdisabledtextcolor="#FFCCCCCC" itemdisabledbkcolor="#FFFFFFFF" normalimage="file=&apos;combo.png&apos; source=&apos;0,0,100,22&apos; corner=&apos;2,2,20,2&apos;" hotimage="file=&apos;combo.png&apos; source=&apos;0,22,100,44&apos; corner=&apos;2,2,22,2&apos;" pushedimage="file=&apos;combo.png&apos; source=&apos;0,44,100,66&apos; corner=&apos;2,2,22,2&apos;" dropboxsize="0,150">
+                            <ListLabelElement text="微软雅黑" selected="true" height="23"/>
+							<ListLabelElement text="宋体" height="23" />
+							<ListLabelElement text="黑体" height="23" />
+							<ListLabelElement text="幼圆" height="23" />
+							<ListLabelElement text="楷体" height="23" />
+                        </Combo>
+                        <Combo name="font_size" text="9" width="50" height="22" itemtextcolor="#FF000000" itemselectedtextcolor="#FF000000" itemselectedbkcolor="#FFC1E3FF" itemhottextcolor="#FF000000" itemhotbkcolor="#FFE9F5FF" itemdisabledtextcolor="#FFCCCCCC" itemdisabledbkcolor="#FFFFFFFF" normalimage="file=&apos;combo.png&apos; source=&apos;0,0,100,22&apos; corner=&apos;2,2,20,2&apos;" hotimage="file=&apos;combo.png&apos; source=&apos;0,22,100,44&apos; corner=&apos;2,2,22,2&apos;" pushedimage="file=&apos;combo.png&apos; source=&apos;0,44,100,66&apos; corner=&apos;2,2,22,2&apos;" dropboxsize="0,150">
+                            <ListLabelElement text="9" selected="true" height="23" />
+							<ListLabelElement text="10" height="23" />
+							<ListLabelElement text="11" height="23" />
+							<ListLabelElement text="12" height="23" />
+							<ListLabelElement text="13" height="23" />
+							<ListLabelElement text="14" height="23" />
+							<ListLabelElement text="15" height="23" />
+							<ListLabelElement text="16" height="23" />
+							<ListLabelElement text="17" height="23" />
+							<ListLabelElement text="18" height="23" />
+							<ListLabelElement text="19" height="23" />
+							<ListLabelElement text="20" height="23" />
+							<ListLabelElement text="21" height="23" />
+							<ListLabelElement text="22" height="23" />
+							<ListLabelElement text="24" height="23" />
+							<ListLabelElement text="28" height="23" />
+							<ListLabelElement text="32" height="23" />
+                        </Combo>
+                        <Control width="5" />
+                        <Option name="boldbtn" text="{i Bold.png}{/i}" width="22" height="22" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" showhtml="true" align="center" hotimage="file=&apos;btn_hot.png&apos; corner=&apos;2,3,2,2&apos;" selectedimage="file=&apos;btn_push.png&apos; corner=&apos;2,5,2,2&apos;" />
+                        <Option name="italicbtn" text="{i Italic.png}{/i}" width="22" height="22" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" showhtml="true" align="center" hotimage="file=&apos;btn_hot.png&apos; corner=&apos;2,3,2,2&apos;" selectedimage="file=&apos;btn_push.png&apos; corner=&apos;2,5,2,2&apos;" />
+                        <Option name="underlinebtn" text="{i underline.png}{/i}" width="22" height="22" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" showhtml="true" align="center" hotimage="file=&apos;btn_hot.png&apos; corner=&apos;2,3,2,2&apos;" selectedimage="file=&apos;btn_push.png&apos; corner=&apos;2,5,2,2&apos;" />
+                        <Option name="colorbtn" text="{i color.png}{/i}" width="22" height="22" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" showhtml="true" align="center" hotimage="file=&apos;btn_hot.png&apos; corner=&apos;2,3,2,2&apos;" selectedimage="file=&apos;btn_push.png&apos; corner=&apos;2,5,2,2&apos;" />
+                    </HorizontalLayout>
+                    <HorizontalLayout height="80" bkcolor="#FFFFFFFF" inset="5,0,0,0">
+                        <RichEdit name="input_richedit" multiline="true" vscrollbar="true" autovscroll="true" enabled="true" rich="false" readonly="false" wantreturn="true" wantctrlreturn="false" />
+                    </HorizontalLayout>
+                    <HorizontalLayout height="32">
+                        <Control />
+                        <Button name="closebtn" text="关闭" tooltip="关闭" width="69" height="24" padding="0,4,0,0" bkimage="file=&apos;unsel.bmp&apos;" maxheight="24" maxwidth="69" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" hotimage="file=&apos;btn_hot.png&apos; corner=&apos;2,3,2,2&apos;" pushedimage="file=&apos;btn_push.png&apos; corner=&apos;2,5,2,2&apos;" />
+                        <Control width="5" />
+                        <Button name="sendbtn" text="发送" tooltip="发送" width="69" height="24" padding="0,4,0,0" bkimage="file=&apos;unsel.bmp&apos;" maxheight="24" maxwidth="69" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" hotimage="file=&apos;btn_hot.png&apos; corner=&apos;2,3,2,2&apos;" pushedimage="file=&apos;btn_push.png&apos; corner=&apos;2,5,2,2&apos;" />
+                    </HorizontalLayout>
+                </VerticalLayout>
+                <VerticalLayout name="right_part" width="100" visible="true" >
+					<List name="file_list" width="300" header="hidden" itemshowhtml="true" vscrollbar="true" autovscroll="true" visible="false" />
+				</VerticalLayout>
+            </HorizontalLayout>
+            <HorizontalLayout height="1" />
+        </VerticalLayout>
+    </HorizontalLayout>
+</Window>

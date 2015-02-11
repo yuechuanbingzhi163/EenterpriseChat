@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<Window size="390,544">
+    <!--VerticalLayout name="bg" bkimage="file='bg0.png' corner='600,200,1,1'" hole="true" width="487" height="544"-->
+	<VerticalLayout name="bg" bkimage="file='bg0.png' corner='600,200,1,1'" hole="true">
+        <HorizontalLayout height="32">
+			<VerticalLayout width="60" inset="2,2,0,0">
+				<Label text="EChat" textcolor="#FFFFFFFF"/>
+			</VerticalLayout>
+            <VerticalLayout height="32" />
+            <VerticalLayout width="60" height="32">
+                <Button float="true" pos="4,5,0,0" width="22" height="23" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+                <Button float="true" pos="34,5,0,0" width="22" height="23" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" />
+            </VerticalLayout>
+        </HorizontalLayout>
+    </VerticalLayout>
+</Window>

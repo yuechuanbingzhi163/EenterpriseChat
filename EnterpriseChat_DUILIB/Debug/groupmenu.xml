@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window size="160,105">
+<VerticalLayout bkimage="file='menu_bk.png' corner='40,8,8,8'" hole="false">
+	<List header="hidden" inset="8,8,8,8" itemhotimage="file='Menu/menu_hot_bk.png' corner='2,2,2,2'">
+		<ListContainerElement name="menu_chat" height="22" inset="40,0,0,0">
+			<Label text="发起会话" mouse="false"/>
+		</ListContainerElement>
+		<ListContainerElement name="menu_bulidgroup" height="22" inset="40,0,0,0">
+			<Label text="新建群组" mouse="false"/>
+		</ListContainerElement>
+	</List>
+</VerticalLayout>
+</Window>
