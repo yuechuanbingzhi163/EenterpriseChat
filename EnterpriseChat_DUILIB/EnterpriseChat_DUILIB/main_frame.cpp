@@ -72,10 +72,15 @@ void main_frame::InitWindow()
 	FriendListItemInfo item;
 	item.m_folder=false;
 	item.m_empty=false;
-	item.m_logo=_T("default.png");
+	item.m_logo=_T("man_big.png");
 	item.m_description=_T("555555");
 	item.m_nick_name=_T("123456789");
 	AddNewFriend(item);
+
+	item.m_logo=_T("default.png");
+	item.m_nick_name=_T("duilib群组");
+	item.m_description=_T("234.225.0.4");
+	AddNewGroup(item);
 	//测试
 	//CDuiString str;
 	//CListUI*  pControl=static_cast<CListUI*>(m_PaintManager.FindControl(LIST_FRIEND));
@@ -281,7 +286,7 @@ void main_frame::Notify(TNotifyUI& msg)
 			if(node->data().m_folder==false)
 			{
 				POINT pt = {msg.ptMouse.x, msg.ptMouse.y};
-				popmenu *pMenu = new popmenu(_T("menu.xml"));
+				popmenu *pMenu = new popmenu(_T("groupmenu.xml"));
 
 				pMenu->SetMainDlg(this);
 				pMenu->Init(*this, pt);
@@ -290,6 +295,20 @@ void main_frame::Notify(TNotifyUI& msg)
 				{
 					pMenu->SetItemEnable(false);
 				}
+				else
+				{
+					pMenu->SetItemEnable(true);
+				}
+			}
+			else
+			{
+				POINT pt = {msg.ptMouse.x, msg.ptMouse.y};
+				popmenu *pMenu = new popmenu(_T("groupmenu.xml"));
+
+				pMenu->SetMainDlg(this);
+				pMenu->Init(*this, pt);
+				pMenu->ShowWindow(TRUE);
+				pMenu->SetItemEnable(false);
 			}
 			return;
 
@@ -355,18 +374,6 @@ void main_frame::Notify(TNotifyUI& msg)
 			return;
 		}
 	}
-	//else if(_tcsicmp(msg.sType,_T("killfocus"))==0)
-	//{
-	//	if(_tcsicmp(sendName,_T("search_edit"))==0)
-	//	{
-	//		msg.pSender->SetVisible(false);
-	//		CRichEditUI* pControl=static_cast<CRichEditUI*>(m_PaintManager.FindControl(_T("search_tip")));
-	//		pControl->SetVisible();
-	//		pControl->SetText(L"搜索联系人，群组");
-	//		//pControl->SetFocus();
-	//		return;
-	//	}
-	//}
 	__super::Notify(msg);
 }
 
@@ -424,6 +431,19 @@ bool main_frame::AddNewFriend(FriendListItemInfo friendInfo)
 	}
 }
 
+bool main_frame::AddNewGroup(FriendListItemInfo friendInfo)
+{
+	commonlist *pControl=static_cast<commonlist*>(m_PaintManager.FindControl(LIST_GROUP));
+	if(pControl->AddNode(friendInfo,m_groupParentNode))
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
 int main_frame::GetFriendIndex(FriendListItemInfo friendInfo)
 {
 	int index=-1;
@@ -458,6 +478,32 @@ bool main_frame::RemoveFriend(FriendListItemInfo friendInfo)
 		return true;
 	}
 	commonlist*  pControl=static_cast<commonlist*>(m_PaintManager.FindControl(LIST_FRIEND));
+	if(pControl==NULL)
+	{
+		return false;
+	}
+	CListContainerElementUI* pElement=static_cast<CListContainerElementUI*>(pControl->GetItemAt(index));
+	if(pElement==NULL)
+	{
+		return false;
+	}
+	Node* pNode=(Node*)pElement->GetTag();
+	if(pNode==NULL)
+	{
+		return false;
+	}
+
+	return pControl->RemoveNode(pNode);
+}
+
+bool main_frame::RemoveGroup(FriendListItemInfo friendInfo)
+{
+	int index=GetFriendIndex(friendInfo);
+	if(-1==index)
+	{
+		return true;
+	}
+	commonlist*  pControl=static_cast<commonlist*>(m_PaintManager.FindControl(LIST_GROUP));
 	if(pControl==NULL)
 	{
 		return false;

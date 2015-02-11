@@ -28,8 +28,10 @@ public:
 	bool AddNewChatDlg(const char* strIP);
 	bool RemoveChatDlg(chat_dialog* chatDlg);
 	bool AddNewFriend(FriendListItemInfo friendInfo);
+	bool AddNewGroup(FriendListItemInfo friendInfo);
 	int  GetFriendIndex(FriendListItemInfo friendInfo);
 	bool RemoveFriend(FriendListItemInfo friendInfo);
+	bool RemoveGroup(FriendListItemInfo friendInfo);
 	bool SetImage(const char *strImage);
 	bool SetName(const char *strName);
 	chat_dialog* FindChatDlgByIP(DuiLib::CDuiString strIP);

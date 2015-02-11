@@ -1,9 +1,9 @@
-﻿// Created by Microsoft (R) C/C++ Compiler Version 11.00.50727.1 (17c072fc).
+﻿// Created by Microsoft (R) C/C++ Compiler Version 11.00.50727.1 (3b282818).
 //
-// e:\github\githubtemp\enterprisechat_duilib\enterprisechat_duilib\debug\Flash32_15_0_0_189.tlh
+// e:\github\eenterprisechat\enterprisechat_duilib\enterprisechat_duilib\debug\Flash32_15_0_0_189.tlh
 //
 // C++ source equivalent of Win32 type library ShockwaveFlash.ShockwaveFlash
-// compiler-generated file created 02/11/15 at 10:51:25 - DO NOT EDIT!
+// compiler-generated file created 02/11/15 at 13:45:46 - DO NOT EDIT!
 
 #pragma once
 #pragma pack(push, 8)

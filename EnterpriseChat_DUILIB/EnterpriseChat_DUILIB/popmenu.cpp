@@ -8,6 +8,9 @@ using namespace DuiLib;
 #define ITEM_FRESH  _T("menu_freshlist")
 #define ITEM_CHNAGEINFO _T("menu_changeinfo")
 
+#define SINGLE_ITEM_HEIGHT 38
+#define ITEM_HEIGHT 25
+
 LRESULT popmenu::OnKillFocus(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
 {
 	Close();
@@ -90,15 +93,25 @@ CControlUI* popmenu::GetGoalCtrl(CControlUI* srcCtrl,LPCTSTR className)
 		parent=parent->GetParent();
 	}
 	return parent;
-}\
+}
 
 bool popmenu::SetItemEnable(bool enable)
 {
+	RECT rect;
+	::GetWindowRect(GetHWND(),&rect);
 	CListContainerElementUI* pControl=static_cast<CListContainerElementUI*>(m_PaintManager.FindControl(ITEM_CHAT));
 	if(pControl==NULL)
 	{
 		return false;
 	}
-	pControl->SetEnabled(enable);
+	pControl->SetVisible(enable);
+	if(enable)
+	{
+		::SetWindowPos(GetHWND(),NULL,rect.left,rect.top,rect.right-rect.left,ITEM_HEIGHT*5,0);
+	}
+	else
+	{
+		::SetWindowPos(GetHWND(),NULL,rect.left,rect.top,rect.right-rect.left,SINGLE_ITEM_HEIGHT,0);
+	}
 	return true;
 }

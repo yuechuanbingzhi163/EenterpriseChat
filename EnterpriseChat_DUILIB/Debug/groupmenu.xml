@@ -8,6 +8,15 @@
 		<ListContainerElement name="menu_bulidgroup" height="22" inset="40,0,0,0">
 			<Label text="新建群组" mouse="false"/>
 		</ListContainerElement>
+		<ListContainerElement name="menu_exitgroup" height="22" inset="40,0,0,0">
+			<Label text="退出群组" mouse="false"/>
+		</ListContainerElement>
+		<ListContainerElement name="menu_breakgroup" height="22" inset="40,0,0,0">
+			<Label text="解散群组" mouse="false"/>
+		</ListContainerElement>
+		<ListContainerElement name="menu_invite" height="22" inset="40,0,0,0,">
+			<Label text="邀请好友" mouse="false"/>
+		</ListContainerElement>
 	</List>
 </VerticalLayout>
 </Window>
