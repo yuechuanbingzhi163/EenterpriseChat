@@ -40,7 +40,7 @@ private:
 	std::list<PER_IO_CONTEXT*> m_listListenData;
 	std::list<PER_IO_CONTEXT*> m_listClientData;
 	std::list<TCPSENDDATA>     m_listTCPSendData;
-	CRITICAL_SECTION				m_TCPCritical;                  //TCP相关临界区
+	CRITICAL_SECTION		   m_TCPCritical;                     //TCP相关临界区
 	//完成端口相关变量
 	HANDLE	  m_IOCompletionPort;
 	int       m_nThreads;
@@ -51,7 +51,7 @@ private:
 	std::string m_name;
 	//窗体相关变量
 	std::string m_image;
-	//std::map<std::string,std::string> m_iniIPName;//配置文件中储存的IP、昵称对
+	std::map<LPCTSTR,LPCTSTR> m_iniIPName;					//配置文件中储存的IP、昵称对
 	main_frame* m_mainDlg;
 public:
 	//启动
@@ -113,6 +113,12 @@ private:
 	std::string GetHost();
 	//初始化本机信息
 	void InitializePC(SOCKADDR_IN addr);
+	//加载本机信息
+	bool LoadPCInfo(LPCTSTR fileName);
+	//加载好友信息
+	bool LoadFriendInfo(LPCTSTR fileName);
+	//加载群组信息
+	bool LoadGroupInfo(LPCTSTR fileName);
 	//工作线程
 	static DWORD WINAPI WorkerThread(LPVOID lpParam);
 public:

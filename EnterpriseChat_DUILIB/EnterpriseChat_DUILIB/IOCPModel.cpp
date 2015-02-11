@@ -17,7 +17,7 @@ CIOCPModel::CIOCPModel(void):
 {
 	m_listUDPMSG.clear();
 	m_listFriens.clear();
-	//m_iniIPName.clear();
+	m_iniIPName.clear();
 }
 
 CIOCPModel::~CIOCPModel(void)
@@ -350,6 +350,48 @@ void CIOCPModel::InitializePC(SOCKADDR_IN addr)
 	m_hostName=GetHost();
 	SetPCImage("default.png");
 	SetPCName(m_hostName);
+	
+	TCHAR strFileName[MAX_PATH]={0};
+	memset(strFileName,0,sizeof(strFileName));
+	int size=MultiByteToWideChar(0,0,OWNINI_PATH,-1,NULL,0);
+	MultiByteToWideChar(0,0,OWNINI_PATH,-1,strFileName,size);
+
+	LoadPCInfo(strFileName);
+
+	//获取和设置自身配置文件完毕，更新界面显示
+	m_mainDlg->SetImage(GetPCImage().c_str());
+	m_mainDlg->SetName(GetPCName().c_str());
+
+	//加载获取好友IP、备注名对
+	memset(strFileName,0,sizeof(strFileName));
+	size=MultiByteToWideChar(0,0,FRIINI_PATH,-1,NULL,0);
+	MultiByteToWideChar(0,0,FRIINI_PATH,-1,strFileName,size);
+
+	LoadFriendInfo(strFileName);
+
+	//加载获取拥有群组信息
+	LoadGroupInfo(strFileName);
+}
+//删除好友
+bool CIOCPModel::RemoveFriendFromList(std::string ip)
+{
+	for(list<string>::iterator ite=m_listFriens.begin();ite!=m_listFriens.end();++ite)
+	{
+		if(*ite==ip)
+		{
+			m_listFriens.remove(ip);
+		}
+	}
+	return true;
+}
+//加载本机信息
+bool CIOCPModel::LoadPCInfo(LPCTSTR fileName)
+{
+	char strFileName[MAX_PATH]={0};
+	memset(strFileName,0,sizeof(strFileName));
+	int size=WideCharToMultiByte(0,0,fileName,-1,NULL,0,NULL,NULL);
+	WideCharToMultiByte(0,0,fileName,-1,strFileName,size,NULL,NULL);
+
 	TCHAR cStrIP[MAX_PATH];
 	memset(cStrIP,0,sizeof(cStrIP));
 	TCHAR cStrHostName[MAX_PATH];
@@ -358,11 +400,8 @@ void CIOCPModel::InitializePC(SOCKADDR_IN addr)
 	memset(cStrName,0,sizeof(cStrName));
 	TCHAR cStrImage[MAX_PATH];
 	memset(cStrImage,0,sizeof(cStrImage));
-	TCHAR cStrFilePath[MAX_PATH];
-	memset(cStrFilePath,0,sizeof(cStrFilePath));
-	int size=0;
-	//判断配置文件是否存在
-	if(-1==_access((OWNINI_PATH),0))
+
+	if(-1==_access((strFileName),0))
 	{
 		//创建文件
 		//AfxMessageBox(L"配置文件不存在！！！");
@@ -378,12 +417,10 @@ void CIOCPModel::InitializePC(SOCKADDR_IN addr)
 		size=MultiByteToWideChar(0,0,m_image.c_str(),-1,NULL,0);
 		MultiByteToWideChar(0,0,m_image.c_str(),-1,cStrImage,size);
 
-		size=MultiByteToWideChar(0,0,OWNINI_PATH,-1,NULL,0);
-		MultiByteToWideChar(0,0,OWNINI_PATH,-1,cStrFilePath,size);
 
-		WritePrivateProfileString(cStrIP,L"HOSTNAME",cStrHostName,cStrFilePath);
-		WritePrivateProfileString(cStrIP,L"NAME",cStrName,cStrFilePath);
-		WritePrivateProfileString(cStrIP,L"IMAGE",cStrImage,cStrFilePath);
+		WritePrivateProfileString(cStrIP,L"HOSTNAME",cStrHostName,fileName);
+		WritePrivateProfileString(cStrIP,L"NAME",cStrName,fileName);
+		WritePrivateProfileString(cStrIP,L"IMAGE",cStrImage,fileName);
 	}
 	else
 	{
@@ -407,20 +444,18 @@ void CIOCPModel::InitializePC(SOCKADDR_IN addr)
 		size=MultiByteToWideChar(0,0,m_image.c_str(),-1,NULL,0);
 		MultiByteToWideChar(0,0,m_image.c_str(),-1,cStrImage,size);
 
-		size=MultiByteToWideChar(0,0,OWNINI_PATH,-1,NULL,0);
-		MultiByteToWideChar(0,0,OWNINI_PATH,-1,cStrFilePath,size);
 
 		//获取配置文件中PC的主机名、昵称、头像，并依次赋值昵称，头像变量，判断主机名是否相同，不同则重新写入
-		GetPrivateProfileString(cStrIP,L"HOSTNAME",cStrHostName,str1,MAX_PATH,cStrFilePath);
-		GetPrivateProfileString(cStrIP,L"NAME",cStrName,str2,MAX_PATH,cStrFilePath);
-		GetPrivateProfileString(cStrIP,L"IMAGE",cStrImage,str3,MAX_PATH,cStrFilePath);
+		GetPrivateProfileString(cStrIP,L"HOSTNAME",cStrHostName,str1,MAX_PATH,fileName);
+		GetPrivateProfileString(cStrIP,L"NAME",cStrName,str2,MAX_PATH,fileName);
+		GetPrivateProfileString(cStrIP,L"IMAGE",cStrImage,str3,MAX_PATH,fileName);
 
 		int number=WideCharToMultiByte(0,0,str1,-1,0,0,NULL,NULL);
 		char* cstr1=new char[number];
 		WideCharToMultiByte(0,0,str1,-1,cstr1,number,NULL,NULL);
 		if(string(cstr1)!=m_hostName)
 		{
-			WritePrivateProfileString(cStrIP,L"HOSTNAME",cStrHostName,cStrFilePath);
+			WritePrivateProfileString(cStrIP,L"HOSTNAME",cStrHostName,fileName);
 		}
 		RELEASE(cstr1);
 
@@ -436,21 +471,24 @@ void CIOCPModel::InitializePC(SOCKADDR_IN addr)
 		SetPCImage(string(cstr3));
 		RELEASE( cstr3);
 	}
-	//获取和设置自身配置文件完毕，更新界面显示
-	m_mainDlg->SetImage(GetPCImage().c_str());
-	m_mainDlg->SetName(GetPCName().c_str());
+	return true;
+}
+//加载好友信息
+bool CIOCPModel::LoadFriendInfo(LPCTSTR fileName)
+{
+	char strFileName[MAX_PATH]={0};
+	memset(strFileName,0,sizeof(strFileName));
+	int size=WideCharToMultiByte(0,0,fileName,-1,NULL,0,NULL,NULL);
+	WideCharToMultiByte(0,0,fileName,-1,strFileName,size,NULL,NULL);
 
-	if(0==_access((FRIINI_PATH),0))
+	if(0==_access((strFileName),0))
 	{
 		int i; 
 		int iPos=0; 
 		int iMaxCount;
 		TCHAR chSectionNames[MAX_ALLSECTIONS]={0}; //总的提出来的字符串
 		TCHAR chSection[MAX_SECTION]={0}; //存放一个段名。
-		memset(cStrFilePath,0,sizeof(cStrFilePath));
-		size=MultiByteToWideChar(0,0,FRIINI_PATH,-1,NULL,0);
-		MultiByteToWideChar(0,0,FRIINI_PATH,-1,cStrFilePath,size);
-		GetPrivateProfileSectionNames(chSectionNames,MAX_ALLSECTIONS,cStrFilePath);
+		GetPrivateProfileSectionNames(chSectionNames,MAX_ALLSECTIONS,fileName);
 		for(i=0;i<MAX_ALLSECTIONS;i++)
 		{
 			if (chSectionNames[i]==0)
@@ -468,27 +506,19 @@ void CIOCPModel::InitializePC(SOCKADDR_IN addr)
 			chSection[iPos++]=chSectionNames[i];
 			if(chSectionNames[i]==0)
 			{ 
-				//CString strSection(chSection);
 				TCHAR cstrName[MAX_SECTION]={0};
-				GetPrivateProfileString(chSection,L"NAME",L"",cstrName,sizeof(cstrName),cStrFilePath);
-				//CString strName(cstrName);
-				//m_iniIPName.insert(make_pair(strSection,strName));
+				GetPrivateProfileString(chSection,L"NAME",L"",cstrName,sizeof(cstrName),fileName);
+				m_iniIPName.insert(make_pair(chSection,cstrName));
 				memset(chSection,0,i);
 				iPos=0;
 			}
 		}
 	}
+	return true;
 }
-//删除好友
-bool CIOCPModel::RemoveFriendFromList(std::string ip)
+//加载群组信息
+bool CIOCPModel::LoadGroupInfo(LPCTSTR fileName)
 {
-	for(list<string>::iterator ite=m_listFriens.begin();ite!=m_listFriens.end();++ite)
-	{
-		if(*ite==ip)
-		{
-			m_listFriens.remove(ip);
-		}
-	}
 	return true;
 }
 /*****************************************/
