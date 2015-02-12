@@ -55,6 +55,7 @@ typedef struct tagPACKAGEHEAD
 
 #define OWNINI_PATH  "D:\\EChatAcceptEx\\own.ini"
 #define FRIINI_PATH	 "D:\\EChatAcceptEx\\friends.ini"
+#define GROUPINI_PATH "D:\\EchatAcceptEx\\groups.ini"
 #define MAX_ALLSECTIONS 2048  //全部的段名
 #define MAX_SECTION 260  //一个段名长度
 
@@ -299,4 +300,19 @@ typedef struct _FriendListItemInfo
 	DuiLib::CDuiString m_nick_name;
 	DuiLib::CDuiString m_description;
 }FriendListItemInfo;
+
+typedef struct _GROUPINFO
+{
+	TCHAR m_groupIP[MAX_PATH];
+	TCHAR m_builder[MAX_PATH];
+	int     m_isManager;
+	int     m_isMember;
+	_GROUPINFO()
+	{
+		memset(m_groupIP,0,sizeof(m_groupIP));
+		memset(m_builder,0,sizeof(m_builder));
+		m_isManager=0;
+		m_isMember=0;
+	}
+}GROUPINFO;
 #endif

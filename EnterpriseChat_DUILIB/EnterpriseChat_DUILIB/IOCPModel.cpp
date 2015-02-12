@@ -3,6 +3,7 @@
 #include "IOCPModel.h"
 #include "main_frame.h"
 #include <UIlib.h>
+#include <time.h>
 
 using namespace std;
 using namespace DuiLib;
@@ -18,6 +19,7 @@ CIOCPModel::CIOCPModel(void):
 	m_listUDPMSG.clear();
 	m_listFriens.clear();
 	m_iniIPName.clear();
+	m_listGroup.clear();
 }
 
 CIOCPModel::~CIOCPModel(void)
@@ -350,7 +352,7 @@ void CIOCPModel::InitializePC(SOCKADDR_IN addr)
 	m_hostName=GetHost();
 	SetPCImage("default.png");
 	SetPCName(m_hostName);
-	
+
 	TCHAR strFileName[MAX_PATH]={0};
 	memset(strFileName,0,sizeof(strFileName));
 	int size=MultiByteToWideChar(0,0,OWNINI_PATH,-1,NULL,0);
@@ -519,7 +521,162 @@ bool CIOCPModel::LoadFriendInfo(LPCTSTR fileName)
 //加载群组信息
 bool CIOCPModel::LoadGroupInfo(LPCTSTR fileName)
 {
+	char strFileName[MAX_PATH]={0};
+	memset(strFileName,0,sizeof(strFileName));
+	int size=WideCharToMultiByte(0,0,fileName,-1,NULL,0,NULL,NULL);
+	WideCharToMultiByte(0,0,fileName,-1,strFileName,size,NULL,NULL);
+
+	if(0==_access((strFileName),0))
+	{
+		int i; 
+		int iPos=0; 
+		int iMaxCount;
+		TCHAR chSectionNames[MAX_ALLSECTIONS]={0}; //总的提出来的字符串
+		TCHAR chSection[MAX_SECTION]={0}; //存放一个段名。
+		GetPrivateProfileSectionNames(chSectionNames,MAX_ALLSECTIONS,fileName);
+		for(i=0;i<MAX_ALLSECTIONS;i++)
+		{
+			if (chSectionNames[i]==0)
+			{
+				if (chSectionNames[i]==chSectionNames[i+1])
+				{
+					break;
+				}
+			}
+		}
+		iMaxCount=i+1; //要多一个0号元素。即找出全部字符串的结束部分。
+		GROUPINFO *groupInfo=NULL;
+		//arrSection.RemoveAll();//清空原数组
+		for(i=0;i<iMaxCount;i++)
+		{
+			chSection[iPos++]=chSectionNames[i];
+			if(chSectionNames[i]==0)
+			{ 
+				groupInfo=new GROUPINFO;
+				memcpy(groupInfo->m_groupIP,chSection,sizeof(chSection));
+				TCHAR cstrName[MAX_SECTION]={0};
+				memset(cstrName,0,sizeof(cstrName));
+				GetPrivateProfileString(chSection,L"GROUPIP",L"",cstrName,sizeof(cstrName),fileName);
+				memcpy(groupInfo->m_builder,cstrName,sizeof(cstrName));
+				memset(cstrName,0,sizeof(cstrName));
+				groupInfo->m_isManager=GetPrivateProfileInt(chSection,L"ISMANAGER",0,fileName);
+				groupInfo->m_isMember=GetPrivateProfileInt(chSection,L"ISMEMBER",0,fileName);
+				m_listGroup.push_back(groupInfo);
+				memset(chSection,0,i);
+				iPos=0;
+			}
+		}
+	}
 	return true;
+}
+//是否是群组创建者
+bool CIOCPModel::IsGroupBuilder(LPCTSTR groupIP)
+{
+	TCHAR cstrIP[MAX_PATH]={0};
+	memset(cstrIP,0,sizeof(cstrIP));
+	int size=MultiByteToWideChar(0,0,m_strIP.c_str(),-1,NULL,0);
+	MultiByteToWideChar(0,0,m_strIP.c_str(),-1,cstrIP,size);
+	GROUPINFO *groupInfo=GetGroupInfo(groupIP);
+	if(groupInfo==NULL)
+	{
+		return false;
+	}
+	if(_tcsicmp(groupInfo->m_builder,cstrIP)==0)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+//是否是群组管理者
+bool CIOCPModel::IsGroupManager(LPCTSTR groupIP)
+{
+	GROUPINFO *groupInfo=GetGroupInfo(groupIP);
+	if(groupInfo==NULL)
+	{
+		return false;
+	}
+	return groupInfo->m_isManager;
+}
+//获取群组信息
+GROUPINFO* CIOCPModel::GetGroupInfo(LPCTSTR groupIP)
+{
+	GROUPINFO* groupInfo=NULL;
+	for(list<GROUPINFO*>::iterator ite=m_listGroup.begin();ite!=m_listGroup.end();++ite)
+	{
+		if(_tcsicmp((*ite)->m_groupIP,groupIP)==0)
+		{
+			groupInfo=*ite;
+			break;
+		}
+	}
+	return groupInfo;
+}
+//设置是否为群组管理员
+void CIOCPModel::SetManager(LPCTSTR groupIP,bool isManager)
+{
+	TCHAR cstrIP[MAX_PATH]={0};
+	memset(cstrIP,0,sizeof(cstrIP));
+	int size=MultiByteToWideChar(0,0,m_strIP.c_str(),-1,NULL,0);
+	MultiByteToWideChar(0,0,m_strIP.c_str(),-1,cstrIP,size);
+	GROUPINFO *groupInfo=GetGroupInfo(groupIP);
+	if(groupInfo==NULL)
+	{
+		return ;
+	}
+	groupInfo->m_isManager=isManager;
+}
+//群IP是否已经存在
+bool CIOCPModel::isExsitGroup(LPCTSTR groupIP)
+{
+	for(list<GROUPINFO*>::iterator ite=m_listGroup.begin();ite!=m_listGroup.end();++ite)
+	{
+		if(_tcsicmp((*ite)->m_groupIP,groupIP)==0)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+//分配群组组播IP
+std::string CIOCPModel::AllocationGroupIP()
+{
+	TCHAR citem[MAX_PATH]={0};
+	char item[MAX_PATH]={0};
+	memset(citem,0,sizeof(citem));
+	memset(item,0,sizeof(item));
+	string ip;
+	srand((unsigned)time(0));
+
+	int ret=rand()%16+224;
+	sprintf_s(item,"%d",ret);
+	ip+=item;
+
+	memset(item,0,sizeof(item));
+	ret=rand()%256;
+	sprintf_s(item,"%d",ret);
+	ip+=item;
+
+	memset(item,0,sizeof(item));
+	ret=rand()%254+2;
+	ip+=item;
+
+	memset(item,0,sizeof(item));
+	ret=rand()%255+1;
+	ip+=item;
+
+	int size=MultiByteToWideChar(0,0,ip.c_str(),-1,NULL,0);
+	MultiByteToWideChar(0,0,ip.c_str(),-1,citem,size);
+	while(isExsitGroup(citem))
+	{
+		ip=AllocationGroupIP();
+		memset(citem,0,sizeof(citem));
+		size=MultiByteToWideChar(0,0,ip.c_str(),-1,NULL,0);
+		MultiByteToWideChar(0,0,ip.c_str(),-1,citem,size);
+	}
+	return ip;
 }
 /*****************************************/
 //通信工作线程

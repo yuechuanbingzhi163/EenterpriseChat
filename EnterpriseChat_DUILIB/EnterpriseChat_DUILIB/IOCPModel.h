@@ -46,6 +46,7 @@ private:
 	int       m_nThreads;
 	HANDLE*   m_workerThreads;
 	std::list<std::string>  m_listFriens;
+	std::list<GROUPINFO*>    m_listGroup;
 	std::string m_strIP;
 	std::string m_hostName;
 	std::string m_name;
@@ -160,5 +161,17 @@ public:
 	PER_IO_CONTEXT* GetIoContextBySocket(SOCKET,OPERATION_TYPE);
 	//删除下线好友
 	bool RemoveFriendFromList(std::string ip);
+	//是否是群组创建者
+	bool IsGroupBuilder(LPCTSTR groupIP);
+	//是否是群组管理者
+	bool IsGroupManager(LPCTSTR groupIP);
+	//获取群组信息
+	GROUPINFO* GetGroupInfo(LPCTSTR groupIP);
+	//设置是否为群组管理员
+	void SetManager(LPCTSTR groupIP,bool isManager);
+	//群IP是否已经存在
+	bool isExsitGroup(LPCTSTR groupIP);
+	//分配群组组播IP
+	std::string AllocationGroupIP();
 };
 #endif
