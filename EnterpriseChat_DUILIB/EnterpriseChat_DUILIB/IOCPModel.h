@@ -168,10 +168,16 @@ public:
 	//获取群组信息
 	GROUPINFO* GetGroupInfo(LPCTSTR groupIP);
 	//设置是否为群组管理员
-	void SetManager(LPCTSTR groupIP,bool isManager);
+	void SetManager(LPCTSTR groupIP,bool isManager,LPCTSTR fileName);
 	//群IP是否已经存在
 	bool isExsitGroup(LPCTSTR groupIP);
 	//分配群组组播IP
 	std::string AllocationGroupIP();
+	//创建群组
+	std::string BuilderGroup(LPCTSTR groupName,LPCTSTR groupImage);
+	//加入群组
+	bool JoinGroup(LPCTSTR groupBuilder,LPCTSTR groupIP,LPCTSTR groupName,LPCTSTR groupImage);
+	//退出群组
+	bool QuitGroup(LPCTSTR groupIP);
 };
 #endif

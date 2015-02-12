@@ -420,9 +420,9 @@ bool CIOCPModel::LoadPCInfo(LPCTSTR fileName)
 		MultiByteToWideChar(0,0,m_image.c_str(),-1,cStrImage,size);
 
 
-		WritePrivateProfileString(cStrIP,L"HOSTNAME",cStrHostName,fileName);
-		WritePrivateProfileString(cStrIP,L"NAME",cStrName,fileName);
-		WritePrivateProfileString(cStrIP,L"IMAGE",cStrImage,fileName);
+		WritePrivateProfileString(cStrIP,PCHOSTNAME,cStrHostName,fileName);
+		WritePrivateProfileString(cStrIP,PCNAME,cStrName,fileName);
+		WritePrivateProfileString(cStrIP,PCIMAGE,cStrImage,fileName);
 	}
 	else
 	{
@@ -448,16 +448,16 @@ bool CIOCPModel::LoadPCInfo(LPCTSTR fileName)
 
 
 		//获取配置文件中PC的主机名、昵称、头像，并依次赋值昵称，头像变量，判断主机名是否相同，不同则重新写入
-		GetPrivateProfileString(cStrIP,L"HOSTNAME",cStrHostName,str1,MAX_PATH,fileName);
-		GetPrivateProfileString(cStrIP,L"NAME",cStrName,str2,MAX_PATH,fileName);
-		GetPrivateProfileString(cStrIP,L"IMAGE",cStrImage,str3,MAX_PATH,fileName);
+		GetPrivateProfileString(cStrIP,PCHOSTNAME,cStrHostName,str1,MAX_PATH,fileName);
+		GetPrivateProfileString(cStrIP,PCNAME,cStrName,str2,MAX_PATH,fileName);
+		GetPrivateProfileString(cStrIP,PCIMAGE,cStrImage,str3,MAX_PATH,fileName);
 
 		int number=WideCharToMultiByte(0,0,str1,-1,0,0,NULL,NULL);
 		char* cstr1=new char[number];
 		WideCharToMultiByte(0,0,str1,-1,cstr1,number,NULL,NULL);
 		if(string(cstr1)!=m_hostName)
 		{
-			WritePrivateProfileString(cStrIP,L"HOSTNAME",cStrHostName,fileName);
+			WritePrivateProfileString(cStrIP,PCHOSTNAME,cStrHostName,fileName);
 		}
 		RELEASE(cstr1);
 
@@ -509,7 +509,7 @@ bool CIOCPModel::LoadFriendInfo(LPCTSTR fileName)
 			if(chSectionNames[i]==0)
 			{ 
 				TCHAR cstrName[MAX_SECTION]={0};
-				GetPrivateProfileString(chSection,L"NAME",L"",cstrName,sizeof(cstrName),fileName);
+				GetPrivateProfileString(chSection,FRIENDNAME,L"",cstrName,sizeof(cstrName),fileName);
 				m_iniIPName.insert(make_pair(chSection,cstrName));
 				memset(chSection,0,i);
 				iPos=0;
@@ -556,11 +556,16 @@ bool CIOCPModel::LoadGroupInfo(LPCTSTR fileName)
 				memcpy(groupInfo->m_groupIP,chSection,sizeof(chSection));
 				TCHAR cstrName[MAX_SECTION]={0};
 				memset(cstrName,0,sizeof(cstrName));
-				GetPrivateProfileString(chSection,L"GROUPIP",L"",cstrName,sizeof(cstrName),fileName);
+				GetPrivateProfileString(chSection,GROUPBUILDER,L"",cstrName,sizeof(cstrName),fileName);
 				memcpy(groupInfo->m_builder,cstrName,sizeof(cstrName));
 				memset(cstrName,0,sizeof(cstrName));
-				groupInfo->m_isManager=GetPrivateProfileInt(chSection,L"ISMANAGER",0,fileName);
-				groupInfo->m_isMember=GetPrivateProfileInt(chSection,L"ISMEMBER",0,fileName);
+				GetPrivateProfileString(chSection,GROUPNAME,L"",cstrName,sizeof(cstrName),fileName);
+				memcpy(groupInfo->m_groupName,cstrName,sizeof(cstrName));
+				memset(cstrName,0,sizeof(cstrName));
+				GetPrivateProfileString(chSection,GROUPIMAGE,L"",cstrName,sizeof(cstrName),fileName);
+				memcpy(groupInfo->m_groupImage,cstrName,sizeof(cstrName));
+				groupInfo->m_isManager=GetPrivateProfileInt(chSection,GROUPMANAGER,0,fileName);
+				groupInfo->m_isMember=GetPrivateProfileInt(chSection,GROUPMEMBER,0,fileName);
 				m_listGroup.push_back(groupInfo);
 				memset(chSection,0,i);
 				iPos=0;
@@ -598,7 +603,14 @@ bool CIOCPModel::IsGroupManager(LPCTSTR groupIP)
 	{
 		return false;
 	}
-	return groupInfo->m_isManager;
+	if(groupInfo->m_isManager==0)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
 }
 //获取群组信息
 GROUPINFO* CIOCPModel::GetGroupInfo(LPCTSTR groupIP)
@@ -615,7 +627,7 @@ GROUPINFO* CIOCPModel::GetGroupInfo(LPCTSTR groupIP)
 	return groupInfo;
 }
 //设置是否为群组管理员
-void CIOCPModel::SetManager(LPCTSTR groupIP,bool isManager)
+void CIOCPModel::SetManager(LPCTSTR groupIP,bool isManager,LPCTSTR fileName)
 {
 	TCHAR cstrIP[MAX_PATH]={0};
 	memset(cstrIP,0,sizeof(cstrIP));
@@ -627,6 +639,14 @@ void CIOCPModel::SetManager(LPCTSTR groupIP,bool isManager)
 		return ;
 	}
 	groupInfo->m_isManager=isManager;
+	if(isManager)
+	{
+		WritePrivateProfileString(groupIP,GROUPMANAGER,_T("1"),fileName);
+	}
+	else
+	{
+		WritePrivateProfileString(groupIP,GROUPMANAGER,_T("0"),fileName);
+	}
 }
 //群IP是否已经存在
 bool CIOCPModel::isExsitGroup(LPCTSTR groupIP)
@@ -677,6 +697,120 @@ std::string CIOCPModel::AllocationGroupIP()
 		MultiByteToWideChar(0,0,ip.c_str(),-1,citem,size);
 	}
 	return ip;
+}
+//创建群组
+string CIOCPModel::BuilderGroup(LPCTSTR groupName,LPCTSTR groupImage)
+{
+	if(_tcsicmp(groupName,_T(""))==0||_tcsicmp(groupImage,_T(""))==0)
+	{
+		return string("");
+	}
+	GROUPINFO *info=new GROUPINFO;
+	string ip=AllocationGroupIP();
+	TCHAR strIP[MAX_PATH]={0};
+	memset(strIP,0,sizeof(strIP));
+	int size=MultiByteToWideChar(0,0,ip.c_str(),-1,NULL,0);
+	MultiByteToWideChar(0,0,ip.c_str(),-1,strIP,size);
+	memcpy(info->m_groupIP,strIP,sizeof(strIP));
+	memcpy(info->m_groupName,groupName,sizeof(groupName));
+	memcpy(info->m_groupImage,groupImage,sizeof(groupImage));
+	TCHAR strBuilder[MAX_PATH]={0};
+	memset(strBuilder,0,sizeof(strBuilder));
+	size=MultiByteToWideChar(0,0,m_strIP.c_str(),-1,NULL,0);
+	MultiByteToWideChar(0,0,m_strIP.c_str(),-1,strBuilder,size);
+	memcpy(info->m_builder,strBuilder,sizeof(strBuilder));
+	info->m_isManager=1;
+	info->m_isMember=1;
+
+	SOCKADDR_IN addr;
+	memset(&addr,0,sizeof(addr));
+	addr.sin_family=AF_INET;
+	addr.sin_addr.S_un.S_addr=inet_addr(ip.c_str());
+	addr.sin_port=htons(USER_PORT);
+
+	TCHAR filePath[MAX_PATH]={0};
+	memset(filePath,0,sizeof(filePath));
+	size=MultiByteToWideChar(0,0,GROUPINI_PATH,-1,NULL,0);
+	MultiByteToWideChar(0,0,GROUPINI_PATH,-1,filePath,size);
+
+	if(m_UDPModel.JoinMutliCast(addr))
+	{
+		m_listGroup.push_back(info);
+		WritePrivateProfileString(strIP,GROUPNAME,groupName,filePath);
+		WritePrivateProfileString(strIP,GROUPIMAGE,groupImage,filePath);
+		WritePrivateProfileString(strIP,GROUPBUILDER,strBuilder,filePath);
+		WritePrivateProfileString(strIP,GROUPMANAGER,_T("1"),filePath);
+		WritePrivateProfileString(strIP,GROUPMEMBER,_T("1"),filePath);
+	}
+	else
+	{
+		RELEASE(info);
+	}
+	return ip;
+}
+//加入群组
+bool CIOCPModel::JoinGroup(LPCTSTR groupBuilder,LPCTSTR groupIP,LPCTSTR groupName,LPCTSTR groupImage)
+{
+	if(_tcsicmp(groupBuilder,_T(""))==0||_tcsicmp(groupIP,_T(""))==0||_tcsicmp(groupName,_T(""))==0||_tcsicmp(groupImage,_T(""))==0)
+	{
+		return false;
+	}
+	GROUPINFO *info=new GROUPINFO;
+	memcpy(info->m_groupIP,groupIP,sizeof(groupIP));
+	memcpy(info->m_groupName,groupName,sizeof(groupName));
+	memcpy(info->m_groupImage,groupImage,sizeof(groupImage));
+	memcpy(info->m_builder,groupBuilder,sizeof(groupBuilder));
+	info->m_isManager=0;
+	info->m_isMember=1;
+
+	char ip[MAX_PATH]={0};
+	memset(ip,0,sizeof(ip));
+	int size=WideCharToMultiByte(0,0,groupIP,-1,NULL,0,NULL,NULL);
+	WideCharToMultiByte(0,0,groupIP,-1,ip,size,NULL,NULL);
+
+	SOCKADDR_IN addr;
+	memset(&addr,0,sizeof(addr));
+	addr.sin_family=AF_INET;
+	addr.sin_addr.S_un.S_addr=inet_addr(ip);
+	addr.sin_port=htons(USER_PORT);
+
+	TCHAR filePath[MAX_PATH]={0};
+	memset(filePath,0,sizeof(filePath));
+	size=MultiByteToWideChar(0,0,GROUPINI_PATH,-1,NULL,0);
+	MultiByteToWideChar(0,0,GROUPINI_PATH,-1,filePath,size);
+
+	if(m_UDPModel.JoinMutliCast(addr))
+	{
+		m_listGroup.push_back(info);
+		WritePrivateProfileString(groupIP,GROUPNAME,groupName,filePath);
+		WritePrivateProfileString(groupIP,GROUPIMAGE,groupImage,filePath);
+		WritePrivateProfileString(groupIP,GROUPBUILDER,groupBuilder,filePath);
+		WritePrivateProfileString(groupIP,GROUPMANAGER,_T("0"),filePath);
+		WritePrivateProfileString(groupIP,GROUPMEMBER,_T("0"),filePath);
+	}
+	else
+	{
+		RELEASE(info);
+	}
+	return true;
+}
+//退出群组
+bool CIOCPModel::QuitGroup(LPCTSTR groupIP)
+{
+	TCHAR strPath[MAX_PATH]={0};
+	memset(strPath,0,sizeof(strPath));
+	int size=MultiByteToWideChar(0,0,GROUPINI_PATH,-1,NULL,0);
+	MultiByteToWideChar(0,0,GROUPINI_PATH,-1,strPath,size);
+
+	WritePrivateProfileString(groupIP,NULL,NULL,strPath);
+	GROUPINFO *info=GetGroupInfo(groupIP);
+	if(info==NULL)
+	{
+		return false;
+	}
+	m_listGroup.remove(info);
+	RELEASE(info);
+	return true;
 }
 /*****************************************/
 //通信工作线程

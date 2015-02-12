@@ -7,6 +7,18 @@
 
 UINT const WMAPP_NOTIFYCALLBACK = WM_APP + 100;
 
+const TCHAR* const PCNAME=_T("NAME");
+const TCHAR* const PCIMAGE=_T("IMAGE");
+const TCHAR* const PCHOSTNAME=_T("HOSTNAME");
+
+const TCHAR* const FRIENDNAME=_T("NAME");
+
+const TCHAR* const GROUPNAME= _T("GROUPNAME");
+const TCHAR* const GROUPIMAGE=_T("GROUPIMAGE");
+const TCHAR* const GROUPBUILDER=_T("GROUPBUILDER");
+const TCHAR* const GROUPMANAGER=_T("GROUPMANAGER");
+const TCHAR* const GROUPMEMBER=_T("GROUPMEMBER");
+
 typedef enum _TCP_HEAD_TYPE
 {
 	TCP_NONE,
@@ -304,13 +316,17 @@ typedef struct _FriendListItemInfo
 typedef struct _GROUPINFO
 {
 	TCHAR m_groupIP[MAX_PATH];
+	TCHAR m_groupName[MAX_PATH];
+	TCHAR m_groupImage[MAX_PATH];
 	TCHAR m_builder[MAX_PATH];
 	int     m_isManager;
 	int     m_isMember;
 	_GROUPINFO()
 	{
 		memset(m_groupIP,0,sizeof(m_groupIP));
+		memset(m_groupName,0,sizeof(m_groupName));
 		memset(m_builder,0,sizeof(m_builder));
+		memset(m_groupImage,0,sizeof(m_groupImage));
 		m_isManager=0;
 		m_isMember=0;
 	}
