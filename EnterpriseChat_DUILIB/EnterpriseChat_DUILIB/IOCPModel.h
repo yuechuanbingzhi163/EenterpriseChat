@@ -169,6 +169,8 @@ public:
 	GROUPINFO* GetGroupInfo(LPCTSTR groupIP);
 	//设置是否为群组管理员
 	void SetManager(LPCTSTR groupIP,bool isManager,LPCTSTR fileName);
+	//设置是否为群组成员
+	void SetMember(LPCTSTR groupIP,bool isMember,LPCTSTR fileName);
 	//群IP是否已经存在
 	bool isExsitGroup(LPCTSTR groupIP);
 	//分配群组组播IP

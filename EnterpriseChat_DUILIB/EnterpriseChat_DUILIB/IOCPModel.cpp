@@ -648,6 +648,28 @@ void CIOCPModel::SetManager(LPCTSTR groupIP,bool isManager,LPCTSTR fileName)
 		WritePrivateProfileString(groupIP,GROUPMANAGER,_T("0"),fileName);
 	}
 }
+//设置是否为群成员
+void CIOCPModel::SetMember(LPCTSTR groupIP,bool isMember,LPCTSTR fileName)
+{
+	TCHAR cstrIP[MAX_PATH]={0};
+	memset(cstrIP,0,sizeof(cstrIP));
+	int size=MultiByteToWideChar(0,0,m_strIP.c_str(),-1,NULL,0);
+	MultiByteToWideChar(0,0,m_strIP.c_str(),-1,cstrIP,size);
+	GROUPINFO *groupInfo=GetGroupInfo(groupIP);
+	if(groupInfo==NULL)
+	{
+		return ;
+	}
+	groupInfo->m_isMember=isMember;
+	if(isMember)
+	{
+		WritePrivateProfileString(groupIP,GROUPMEMBER,_T("1"),fileName);
+	}
+	else
+	{
+		WritePrivateProfileString(groupIP,GROUPMEMBER,_T("0"),fileName);
+	}
+}
 //群IP是否已经存在
 bool CIOCPModel::isExsitGroup(LPCTSTR groupIP)
 {
@@ -1048,6 +1070,7 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 	UDPDATA *data=(UDPDATA*)pIoContext->m_szBuffer;
 	SOCKADDR_IN addr=pIoContext->m_senderAddr;
 	UDPDATA sendData;
+	GROUPINFO* groupInfo=NULL;
 	FriendListItemInfo friendInfo; //好友信息，主要用于上下线消息
 	string strIP; //远端发送方IP
 	string aimIP; //远端发送方发送目标IP，主要用于多播处理，用于区别不同的多播组
@@ -1148,7 +1171,7 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 		m_mainDlg->RecvUDPMessage(inet_ntoa(addr.sin_addr),*data);
 		//普通消息点对点消息
 		break;
-	case UDPMSGTYPE::COMMONMUTLICAST:
+	case UDPMSGTYPE::COMMONMULTICAST:
 		if(false==IsExsitedInFriendsList(pIoContext->m_senderAddr))
 		{
 			strIP=string(inet_ntoa(pIoContext->m_senderAddr.sin_addr));
@@ -1182,6 +1205,40 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 		break;
 	case UDPMSGTYPE::NAT:
 		//穿透消息
+		break;
+	case UDPMSGTYPE::MULTICAST_CREATE:
+		//群创建消息
+		groupInfo=(GROUPINFO*)(data->m_message);
+		if(groupInfo==NULL)
+		{
+			break;
+		}
+		JoinGroup(groupInfo->m_builder,groupInfo->m_groupIP,groupInfo->m_groupName,groupInfo->m_groupImage);
+		break;
+	case UDPMSGTYPE::MULTICAST_INVITE:
+		memset(strTemp,0,sizeof(strTemp));
+		size=MultiByteToWideChar(0,0,GROUPINI_PATH,-1,NULL,0);
+		MultiByteToWideChar(0,0,GROUPINI_PATH,-1,strTemp,size);
+		groupInfo=(GROUPINFO*)(data->m_message);
+		if(groupInfo==NULL)
+		{
+			break;
+		}
+		if(GetGroupInfo(groupInfo->m_groupIP)==0)
+		{
+			JoinGroup(groupInfo->m_builder,groupInfo->m_groupIP,groupInfo->m_groupName,groupInfo->m_groupImage);
+		}
+		SetMember(groupInfo->m_groupIP,true,strTemp);
+		//邀请入群消息
+		break;
+	case UDPMSGTYPE::MULTICAST_BANISH:
+		//被踢出群消息
+		break;
+	case UDPMSGTYPE::MULTICAST_JOIN:
+		//加入群消息
+		break;
+	case UDPMSGTYPE::MULTICAST_QUIT:
+		//退出群消息
 		break;
 	default:
 		break;

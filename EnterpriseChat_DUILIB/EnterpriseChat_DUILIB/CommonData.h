@@ -82,12 +82,17 @@ typedef struct tagPACKAGEHEAD
 //UDP信息类别，分为上线，下线，普通信息，UDP穿透信息
 typedef enum _UDPMSGTYPE
 {
-	LOGON,
-	LOGOFF,
-	COMMONPOINT,
-	COMMONMUTLICAST,
-	SHAREFILE,
-	NAT
+	LOGON, //上线
+	LOGOFF, //下线
+	COMMONPOINT, //普通点对点消息
+	COMMONMULTICAST, //普通群消息
+	SHAREFILE,   //共享文件消息
+	NAT,    //UDP穿透消息
+	MULTICAST_CREATE, //群创建（所有）
+	MULTICAST_INVITE,	//邀请加入群消息（一对一）
+	MULTICAST_BANISH,	//被踢出群消息（一对一）
+	MULTICAST_JOIN,		//加入群消息（群组）
+	MULTICAST_QUIT		//退出群消息（群组）
 }UDPMSGTYPE,*PUDPMSGTYPE;
 //UDP数据包
 typedef struct _UDPDATA

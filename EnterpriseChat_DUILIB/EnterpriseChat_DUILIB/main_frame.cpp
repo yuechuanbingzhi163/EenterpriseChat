@@ -823,7 +823,7 @@ bool main_frame::SendUDPMessage(WNDTYPE type,CDuiString description,CDuiString m
 		data.m_msgType=UDPMSGTYPE::COMMONPOINT;
 		break;
 	case WNDTYPE::WND_MUTLICAST:
-		data.m_msgType=UDPMSGTYPE::COMMONMUTLICAST;
+		data.m_msgType=UDPMSGTYPE::COMMONMULTICAST;
 		break;
 	default:
 		return false;
