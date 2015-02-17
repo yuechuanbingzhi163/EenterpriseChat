@@ -1065,8 +1065,10 @@ bool CIOCPModel::RecvUDPMessage(PER_IO_CONTEXT* pIoContext)
 bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 {
 	TCHAR strTemp[MAX_PATH]={0};
+	char  cTemp[MAX_PATH]={0};
 	int size=-1;
 	memset(strTemp,0,sizeof(strTemp));
+	memset(cTemp,0,sizeof(cTemp));
 	UDPDATA *data=(UDPDATA*)pIoContext->m_szBuffer;
 	SOCKADDR_IN addr=pIoContext->m_senderAddr;
 	UDPDATA sendData;
@@ -1232,6 +1234,25 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 		//邀请入群消息
 		break;
 	case UDPMSGTYPE::MULTICAST_BANISH:
+		groupInfo=(GROUPINFO*)(data->m_message);
+		if(groupInfo==NULL)
+		{
+			break;
+		}
+		memset(cTemp,0,sizeof(cTemp));
+		size=WideCharToMultiByte(0,0,groupInfo->m_groupIP,-1,NULL,0,NULL,NULL);
+		WideCharToMultiByte(0,0,groupInfo->m_groupIP,-1,cTemp,size,NULL,NULL);
+		sendData.m_addr.sin_family=AF_INET;
+		sendData.m_addr.sin_addr.S_un.S_addr=inet_addr(cTemp);
+		sendData.m_addr.sin_port=htons(USER_PORT);
+		addr=sendData.m_addr;
+		memcpy(sendData.m_hostName,m_hostName.c_str(),(m_hostName.size()+1)*sizeof(char));
+		memcpy(sendData.m_name,m_name.c_str(),(m_name.size()+1)*sizeof(char));
+		memcpy(sendData.m_image,m_image.c_str(),(m_image.size()+1)*sizeof(char));
+		memcpy(sendData.m_message,groupInfo,sizeof(*groupInfo));
+		sendData.m_msgType=UDPMSGTYPE::MULTICAST_QUIT;
+		SendUDPMessage(addr,sendData,pIoContext);
+		QuitGroup(groupInfo->m_groupIP);
 		//被踢出群消息
 		break;
 	case UDPMSGTYPE::MULTICAST_JOIN:
