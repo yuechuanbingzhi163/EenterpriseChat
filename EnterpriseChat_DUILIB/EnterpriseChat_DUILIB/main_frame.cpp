@@ -750,7 +750,7 @@ CDuiString main_frame::GetName()
 void main_frame::OnFinalMessage(HWND hWnd)
 {
 	WindowImplBase::OnFinalMessage(hWnd);
-	delete this;
+	//delete this;
 	return;
 }
 

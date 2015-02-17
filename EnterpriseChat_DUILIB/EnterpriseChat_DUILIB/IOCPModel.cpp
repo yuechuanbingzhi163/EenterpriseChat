@@ -1240,6 +1240,12 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 	case UDPMSGTYPE::MULTICAST_QUIT:
 		//退出群消息
 		break;
+	case UDPMSGTYPE::MULTICAST_SETMANAGER:
+		//设置为群管理员
+		break;
+	case UDPMSGTYPE::MULTICAST_CACELMANAGER:
+		//取消群管理员身份
+		break;
 	default:
 		break;
 	}

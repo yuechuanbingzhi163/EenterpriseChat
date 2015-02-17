@@ -1,10 +1,20 @@
-﻿生成启动时间为 2015/2/12 17:22:39。
-     1>项目“E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB.vcxproj”在节点 2 上(Build 个目标)。
+﻿生成启动时间为 2015/2/17 星期二 11:41:30。
+     1>项目“D:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt IOCPModel.cpp
+         D:\VS2012\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt IOCPModel.cpp TCPModel.cpp UDPModel.cpp chat_dialog.cpp commonlist.cpp main.cpp main_frame.cpp popmenu.cpp
+         popmenu.cpp
+         main.cpp
+         commonlist.cpp
+         chat_dialog.cpp
+         UDPModel.cpp
+         TCPModel.cpp
          IOCPModel.cpp
+         正在生成代码...
+         正在编译...
+         main_frame.cpp
+         正在生成代码...
        Link:
-         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.lib" /MACHINE:X86 Debug\EnterpriseChat_DUILIB.res
+         D:\VS2012\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.lib" /MACHINE:X86 Debug\EnterpriseChat_DUILIB.res
          Debug\chat_dialog.obj
          Debug\commonlist.obj
          Debug\IOCPModel.obj
@@ -13,9 +23,9 @@
          Debug\popmenu.obj
          Debug\TCPModel.obj
          Debug\UDPModel.obj
-         EnterpriseChat_DUILIB.vcxproj -> E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.exe
-     1>已完成生成项目“E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB.vcxproj”(Build 个目标)的操作。
+         EnterpriseChat_DUILIB.vcxproj -> D:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.exe
+     1>已完成生成项目“D:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:03.75
+已用时间 00:00:28.07

@@ -92,7 +92,9 @@ typedef enum _UDPMSGTYPE
 	MULTICAST_INVITE,	//邀请加入群消息（一对一）
 	MULTICAST_BANISH,	//被踢出群消息（一对一）
 	MULTICAST_JOIN,		//加入群消息（群组）
-	MULTICAST_QUIT		//退出群消息（群组）
+	MULTICAST_QUIT,		//退出群消息（群组）
+	MULTICAST_SETMANAGER,
+	MULTICAST_CACELMANAGER
 }UDPMSGTYPE,*PUDPMSGTYPE;
 //UDP数据包
 typedef struct _UDPDATA
