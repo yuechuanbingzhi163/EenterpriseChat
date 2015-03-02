@@ -4,6 +4,7 @@
 #include "IOCPModel.h"
 #include "stdafx.h"
 #include "main_frame.h"
+#include <WinInet.h>
 
 #include <atlbase.h>
 CComModule _Module;
@@ -15,6 +16,7 @@ using namespace DuiLib;
 
 #pragma comment(lib,"WS2_32.LIB")
 #pragma comment(lib,"Shell32.lib")
+#pragma comment(lib,"Wininet.lib")
 
 #ifdef _DEBUG
 #   ifdef _UNICODE
@@ -52,6 +54,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE /*hPrevInstance*/, LPTSTR lp
 	HRESULT Hr = ::CoInitializeEx(NULL, COINIT_MULTITHREADED);
 #endif
 	if( FAILED(Hr) ) return 0;
+
+	DWORD flag=0;
+	if(!InternetGetConnectedState(&flag,0))
+	{
+		MessageBox(NULL,_T("未连接到互联网或局域网,请在确保有外部连接的情况下使用本软件！"),NULL,0);
+		return 0;
+	}
 
 	main_frame* pFrame = new main_frame(); 
 	if( pFrame == NULL ) return 0;

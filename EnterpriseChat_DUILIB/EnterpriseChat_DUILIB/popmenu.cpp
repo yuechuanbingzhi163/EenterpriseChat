@@ -1,5 +1,6 @@
 #include "main_frame.h"
 #include "popmenu.h"
+#include "changepcinfo.h"
 using namespace DuiLib;
 
 #define ITEM_CHAT _T("menu_chat")
@@ -73,7 +74,10 @@ void popmenu::Notify(DuiLib::TNotifyUI& msg)
 		}
 		else if(_tcsicmp(ctrlName,ITEM_CHNAGEINFO)==0)
 		{
-
+			changepcinfo* window=new changepcinfo();
+			window->Create(NULL,_T("changepcinfoDlg"),UI_WNDSTYLE_FRAME,WS_EX_WINDOWEDGE | WS_EX_ACCEPTFILES,  NULL, 0, 0, 0, 0);
+			window->CenterWindow();
+			window->ShowWindow();
 		}
 		::SendMessage(GetHWND(),WM_KILLFOCUS,NULL,NULL);
 		return;

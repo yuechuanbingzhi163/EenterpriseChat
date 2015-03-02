@@ -73,7 +73,7 @@ void main_frame::InitWindow()
 	item.m_folder=false;
 	item.m_empty=false;
 	item.m_logo=_T("man_big.png");
-	item.m_description=_T("555555");
+	item.m_description=_T("123456789");
 	item.m_nick_name=_T("123456789");
 	AddNewFriend(item);
 
@@ -81,107 +81,6 @@ void main_frame::InitWindow()
 	item.m_nick_name=_T("duilib群组");
 	item.m_description=_T("234.225.0.4");
 	AddNewGroup(item);
-	//测试
-	//CDuiString str;
-	//CListUI*  pControl=static_cast<CListUI*>(m_PaintManager.FindControl(LIST_FRIEND));
-	//for (int i = 0; i < 10; i++)
-	//{
-	//	int count=pControl->GetCount();
-	//	CListContainerElementUI* pListElement=NULL;
-	//	if( !m_dlgBuilder.GetMarkup()->IsValid())
-	//	{
-	//		pListElement = static_cast<CListContainerElementUI*>(m_dlgBuilder.Create(_T("friend_list_item.xml"), (UINT)0, NULL, &m_PaintManager));
-	//	}
-	//	else 
-	//	{
-	//		pListElement = static_cast<CListContainerElementUI*>(m_dlgBuilder.Create((UINT)0, &m_PaintManager));
-	//	}
-	//	pListElement->SetVisible();
-	//	pListElement->SetTag(i);
-	//	pControl->Add(pListElement);
-	//	CButtonUI* pBtn=static_cast<CButtonUI*>(m_PaintManager.FindSubControlByName(pListElement,FRIEND_LOGO));
-	//	pBtn->SetNormalImage(L"default.png");
-	//	CLabelUI* pLabel1=static_cast<CLabelUI*>(m_PaintManager.FindSubControlByName(pListElement,FRIEND_NAME));
-	//	pLabel1->SetText(L"kdkdkdkdkdk");
-	//	CLabelUI* pLabel2=static_cast<CLabelUI*>(m_PaintManager.FindSubControlByName(pListElement,FRIEND_DESCRIPTION));
-	//	pLabel2->SetText(L"kdkdkdkdkdk@163.com");
-	//	//CVerticalLayoutUI* pVerLayout=static_cast<CVerticalLayoutUI*>(m_PaintManager.FindSubControlByName(pListElement,L"operation"));
-	//	//pVerLayout->SetVisible();
-	//	pListElement->SetFixedHeight(32);
-	//	if(i%2==0)
-	//	{
-	//		pListElement->SetVisible(false);
-	//	}
-	//}
-	//int count=pControl->GetCount();
-
-	/*CControlUI* pControl=m_PaintManager.FindControl(LIST_FRIEND);
-	commonlist*  pListFriend=static_cast<commonlist*>(m_PaintManager.FindControl(LIST_FRIEND));
-	FriendListItemInfo item;
-
-	item.m_id = _T("0");
-	item.m_folder = true;
-	item.m_empty = false;
-	item.m_nick_name = _T("我的好友");
-	Node* root_parent = pListFriend->AddNode(item, NULL);
-
-
-
-	item.m_id = _T("1");
-	item.m_folder = false;		
-	item.m_logo = _T("man.png");
-	item.m_nick_name = _T("tojen");
-	item.m_description = _T("tojen.me@gmail.com");
-
-
-	pListFriend->AddNode(item, root_parent);
-
-	item.m_id = _T("2");
-	item.m_folder = false;
-	item.m_logo = _T("default.png");
-	item.m_nick_name = _T("achellies");
-	item.m_description = _T("achellies@hotmail.com");
-	pListFriend->AddNode(item, root_parent);
-
-	item.m_id = _T("2");
-	item.m_folder = false;
-	item.m_logo = _T("default.png");
-	item.m_nick_name = _T("wangchyz");
-	item.m_description = _T("wangchyz@gmail.com");
-	pListFriend->AddNode(item, root_parent);
-
-
-	for( int i = 0; i < 100; ++i )
-	{
-		item.m_id = _T("2");
-		item.m_folder = false;
-		item.m_logo = _T("default.png");
-		item.m_nick_name = _T("duilib");
-		item.m_description = _T("www.duilib.com");
-		pListFriend->AddNode(item, root_parent);
-	}
-
-	item.m_folder = true;
-	item.m_empty = false;
-	item.m_nick_name = _T("企业好友");
-	root_parent=pListFriend->AddNode(item, NULL);
-
-
-
-
-	item.m_folder = true;
-	item.m_empty = false;
-	item.m_nick_name = _T("黑名单");
-	pListFriend->AddNode(item, NULL);
-
-	item.m_id = _T("1");
-	item.m_folder = false;		
-	item.m_logo = _T("man.png");
-	item.m_nick_name = _T("企业");
-	item.m_description = _T("tojen.me@gmail.com");
-	pListFriend->AddNode(item, root_parent);*/
-
-
 }
 
 void main_frame::Notify(TNotifyUI& msg)
@@ -750,7 +649,7 @@ CDuiString main_frame::GetName()
 void main_frame::OnFinalMessage(HWND hWnd)
 {
 	WindowImplBase::OnFinalMessage(hWnd);
-	//delete this;
+	delete this;
 	return;
 }
 

@@ -36,6 +36,7 @@ public:
 	bool SetWndEnableState(bool enable=true);
 	bool AddNewFileItem(TCPDATA data,FILEOPERATIONTYPE type,FILEINFO* fileInfo);
 	bool SetIsHaveFile(bool haveFile);
+	void SetIsGroupChatDlg(WNDTYPE type);
 	DuiLib::CControlUI* GetGoalCtrl(DuiLib::CControlUI* srcCtrl,LPCTSTR className);
 private:
 	main_frame* m_mainDlg;

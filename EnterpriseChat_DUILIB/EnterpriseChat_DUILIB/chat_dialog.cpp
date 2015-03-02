@@ -13,7 +13,9 @@
 #define CHATDLG_CANCELBTN _T("closebtn")
 #define CHATDLG_SENDBTN   _T("sendbtn")
 #define CHATDLG_FILECONTAINER _T("right_part")
+#define CHATDLG_FILECONTAINEREMPTY _T("right_part_empty")
 #define CHATDLG_FILELIST _T("file_list")
+#define CHATDLG_MEMBERLIST _T("member_list")
 
 
 #define FILE_IMAGE _T("logo")
@@ -29,6 +31,7 @@
 #define ITEM_HEIGHT 40
 #define LISTPART_NORMAL_WIDTH 100
 #define LISTPART_EXTRA_WIDTH  200
+#define LISTPART_GROUPEXTRA_WIDTH 150
 
 #define WND_FILE_SEND _T("send")
 #define WND_FILE_ACCEPT _T("accept")
@@ -81,6 +84,7 @@ void chat_dialog::InitWindow()
 	DragAcceptFiles(GetHWND(),TRUE);
 
 	SetIsHaveFile(false);
+	SetIsGroupChatDlg(m_type);
 
 	RecvMessage(_T("一语成谶"),_T("耶耶耶我i万i万i万i万i万i"));
 	RecvMessage(_T("一语成谶"),_T("哈哈哈哈哈哈哈哈哈哈哈哈"));
@@ -91,7 +95,7 @@ void chat_dialog::InitWindow()
 	data.m_fileLen=5000;
 	memcpy(data.m_fileName,"c:\\desktop\\wini.xml",sizeof("c:\\desktop\\wini.xml"));
 	//AddNewFileItem(data,FILEOPERATIONTYPE::FILE_OPE_SEND,NULL);
-	AddNewFileItem(data,FILEOPERATIONTYPE::FILE_OPE_ACCEPT,NULL);
+	//AddNewFileItem(data,FILEOPERATIONTYPE::FILE_OPE_ACCEPT,NULL);
 	/*for(int i=0;i<10;++i)
 	{
 	if( !m_dlgBuilder.GetMarkup()->IsValid())
@@ -127,6 +131,7 @@ void chat_dialog::Notify(DuiLib::TNotifyUI& msg)
 			pRichEdit->SetText(_T(""));
 			RecvMessage(m_mainDlg->GetName(),str);
 			m_mainDlg->SendUDPMessage(m_type,m_description,str);
+			pRichEdit->SetFocus();
 			return;
 		}
 		if(_tcsicmp(sendName,_T("open"))==0)
@@ -595,6 +600,23 @@ bool chat_dialog::SetIsHaveFile(bool haveFile)
 	return true;
 }
 
+void chat_dialog::SetIsGroupChatDlg(WNDTYPE type)
+{
+	if(type==WNDTYPE::WND_MUTLICAST)
+	{
+		CHorizontalLayoutUI* pHorizontal=static_cast<CHorizontalLayoutUI*>(m_PaintManager.FindControl(CHATDLG_FILECONTAINEREMPTY));
+		CVerticalLayoutUI* pVertical=static_cast<CVerticalLayoutUI*>(m_PaintManager.FindControl(CHATDLG_FILECONTAINER));
+		CListUI*  pList=static_cast<CListUI*>(m_PaintManager.FindControl(CHATDLG_MEMBERLIST));
+		if(pVertical==NULL||pList==NULL||pHorizontal==NULL)
+		{
+			return;
+		}
+		pVertical->SetFixedWidth(LISTPART_GROUPEXTRA_WIDTH);
+		pHorizontal->SetVisible();
+		pList->SetVisible();
+	}
+}
+
 CControlUI* chat_dialog::GetGoalCtrl(CControlUI* srcCtrl,LPCTSTR className)
 {
 	CControlUI* parent=srcCtrl;
@@ -626,6 +648,10 @@ LRESULT chat_dialog::HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void chat_dialog::DropFileOnDlg(HDROP hDrop)  
 {  
+	if(m_type==WNDTYPE::WND_MUTLICAST)
+	{
+		return;
+	}
 	WORD                wNumFilesDropped = DragQueryFile(hDrop, -1, NULL, 0);  
 	WORD                wPathnameSize = 0;  
 	WCHAR *             pFilePathName = NULL;  

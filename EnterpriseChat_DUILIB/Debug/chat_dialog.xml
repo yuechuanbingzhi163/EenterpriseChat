@@ -71,7 +71,11 @@
                     </HorizontalLayout>
                 </VerticalLayout>
                 <VerticalLayout name="right_part" width="100" visible="true" >
-					<List name="file_list" width="300" header="hidden" itemshowhtml="true" vscrollbar="true" autovscroll="true" visible="false" />
+					<HorizontalLayout  name="right_part_empty" height="250" visible="false" />
+					<HorizontalLayout >
+						<List name="member_list" width="200" header="hidden" temshowhtml="true" vscrollbar="true" autovscroll="true" bkcolor="#FFFFFFFF" visible="false" inset="5,0,0,0" />
+						<List name="file_list" width="300" header="hidden" itemshowhtml="true" vscrollbar="true" autovscroll="true" visible="false" />
+					</HorizontalLayout>
 				</VerticalLayout>
             </HorizontalLayout>
             <HorizontalLayout height="1" />

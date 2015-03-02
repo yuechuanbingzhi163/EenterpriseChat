@@ -42,6 +42,9 @@
     <ClCompile Include="commonlist.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="changepcinfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main_frame.h">
@@ -69,6 +72,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="commonlist.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="changepcinfo.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

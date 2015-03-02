@@ -1762,7 +1762,7 @@ bool CIOCPModel::ClientClose(PER_IO_CONTEXT* pIoContext)
 	}
 	return true;
 }
-//
+//获取通信数据结构
 PER_IO_CONTEXT* CIOCPModel::GetIoContextBySocket(SOCKET tempSocket,OPERATION_TYPE type)
 {
 	PER_IO_CONTEXT* pIoContext=NULL;
@@ -1776,4 +1776,3 @@ PER_IO_CONTEXT* CIOCPModel::GetIoContextBySocket(SOCKET tempSocket,OPERATION_TYP
 	}
 	return pIoContext;
 }
-

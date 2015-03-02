@@ -349,7 +349,7 @@ Node* commonlist::AddNode(const FriendListItemInfo& item, Node* parent )
 		CLabelUI* description = static_cast<CLabelUI*>(m_paint_manager.FindSubControlByName(pListElement, kDescriptionControlName));
 		if (description != NULL)
 		{
-			_stprintf_s(szBuf, MAX_PATH - 1, _T("<x 20><c #808080>%s</c>"), item.m_description);
+			_stprintf_s(szBuf, MAX_PATH - 1, _T("%s"), item.m_description);
 			description->SetShowHtml(true);
 			description->SetText(szBuf);
 		}

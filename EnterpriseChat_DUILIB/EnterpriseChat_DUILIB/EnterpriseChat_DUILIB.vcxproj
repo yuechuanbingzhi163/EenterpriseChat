@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="changepcinfo.cpp" />
     <ClCompile Include="chat_dialog.cpp" />
     <ClCompile Include="commonlist.cpp" />
     <ClCompile Include="IOCPModel.cpp" />
@@ -89,6 +90,7 @@
     <ClCompile Include="UDPModel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="changepcinfo.h" />
     <ClInclude Include="chat_dialog.h" />
     <ClInclude Include="CommonData.h" />
     <ClInclude Include="commonlist.h" />
