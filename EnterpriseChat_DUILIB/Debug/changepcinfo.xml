@@ -11,15 +11,41 @@
 				</VerticalLayout>
 				<VerticalLayout />
 				 <VerticalLayout width="95">
-                    <Button name="minbtn" float="true" pos="0,0,0,0" width="28" height="19" maxheight="19" maxwidth="28" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file=&apos;btn_mini_normal.png&apos;" hotimage="btn_mini_highlight.png" pushedimage="btn_mini_down.png" />
-                    <Button name="maxbtn" float="true" pos="28,0,0,0" width="28" height="19" maxheight="19" maxwidth="28" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file=&apos;btn_max_normal.png&apos;" hotimage="btn_max_highlight.png" pushedimage="btn_max_down.png" />
+                    <Button name="minbtn" float="true" pos="28,0,0,0" width="28" height="19" maxheight="19" maxwidth="28" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file=&apos;btn_mini_normal.png&apos;" hotimage="btn_mini_highlight.png" pushedimage="btn_mini_down.png" />
+                    <Button name="maxbtn"  visible="false" float="true" pos="28,0,0,0" width="28" height="19" maxheight="19" maxwidth="28" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file=&apos;btn_max_normal.png&apos;" hotimage="btn_max_highlight.png" pushedimage="btn_max_down.png" />
                     <Button name="restorebtn" visible="false" float="true" pos="28,0,0,0" width="28" height="19" maxheight="19" maxwidth="28" align="center" normalimage="file=&apos;btn_restore_normal.png&apos;" hotimage="btn_restore_highlight.png" pushedimage="btn_restore_down.png" />
                     <Button name="closebtn" float="true" pos="56,0,0,0" width="39" height="19" maxheight="19" maxwidth="39" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file=&apos;btn_close_normal.png&apos;" hotimage="btn_close_highlight.png" pushedimage="btn_close_down.png" />
                 </VerticalLayout>
 			</HorizontalLayout>
+			<HorizontalLayout height="20" />
 			<HorizontalLayout>
-				
+				<VerticalLayout width="140" >
+					<Button name="btn_image" bkcolor="#ffffffff" float="true" pos="30,50,0,0" width="64" height="64" maxheight="64" maxwidth="64" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" normalimage="file=&apos;btn_mini_normal.png&apos;" />
+				</VerticalLayout>
+				<VerticalLayout>
+					<List name="list_image"  header="hidden" temshowhtml="true" vscrollbar="true" autovscroll="true" bkcolor="#FFFFFFFF" visible="true" />
+				</VerticalLayout>
+				<VerticalLayout width="50" />
 			</HorizontalLayout>
+			<HorizontalLayout height="20" />
+			<HorizontalLayout height="30" >
+				<VerticalLayout  inset="15,0,0,0" width="50">
+					<Label text="昵称"   width="50" height="20" textcolor="#FFFFFFFF" disabledtextcolor="#FFA7A6AA" font="2" />
+				</VerticalLayout>
+				<VerticalLayout >
+					<RichEdit name="edit_name"  inset="4,1,0,0" height="20" bkcolor="0xffffffff" text="" multiline="false" rich="false"/>
+				</VerticalLayout>
+				<VerticalLayout width="50" />
+			</HorizontalLayout>
+			<HorizontalLayout height="5"/>
+			<HorizontalLayout height="25" >
+				<Control />
+                <Button name="btn_ok" text="确定" tooltip="确定" width="69" height="24" padding="0,4,0,0" bkimage="file=&apos;unsel.bmp&apos;" maxheight="24" maxwidth="69" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" hotimage="file=&apos;btn_hot.png&apos; corner=&apos;2,3,2,2&apos;" pushedimage="file=&apos;btn_push.png&apos; corner=&apos;2,5,2,2&apos;" />
+                <Control width="5" />
+                <Button name="btn_cancel" text="取消" tooltip="取消" width="69" height="24" padding="0,4,0,0" bkimage="file=&apos;unsel.bmp&apos;" maxheight="24" maxwidth="69" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" hotimage="file=&apos;btn_hot.png&apos; corner=&apos;2,3,2,2&apos;" pushedimage="file=&apos;btn_push.png&apos; corner=&apos;2,5,2,2&apos;" />
+				<Control width="5" />
+			</HorizontalLayout>
+			<HorizontalLayout height="5" />
 		</VerticalLayout>
     </HorizontalLayout>
 </Window>

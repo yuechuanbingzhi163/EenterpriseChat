@@ -6,7 +6,7 @@ const TCHAR* const kLogoButtonControlName = _T("logo");
 const TCHAR* const kLogoContainerControlName = _T("logo_container");
 const TCHAR* const kNickNameControlName = _T("nickname");
 const TCHAR* const kDescriptionControlName = _T("description");
-const TCHAR* const kOperatorPannelControlName = _T("operation");
+const TCHAR* const kOperatorPannelControlName = _T("operation";)
  
 const int kFriendListItemNormalHeight = 32;
 const int kFriendListItemSelectedHeight = 50;

@@ -21,6 +21,8 @@
 #define FRIEND_NAME         _T("nickname")
 #define FRIEND_DESCRIPTION  _T("description")
 
+const TCHAR* const SEARCHTITLE=_T("搜索联系人，群组");
+
 using namespace DuiLib;
 
 main_frame::main_frame(void)
@@ -69,7 +71,7 @@ void main_frame::InitWindow()
 
 	InitListFloder();
 
-	FriendListItemInfo item;
+	/*FriendListItemInfo item;
 	item.m_folder=false;
 	item.m_empty=false;
 	item.m_logo=_T("man_big.png");
@@ -80,7 +82,7 @@ void main_frame::InitWindow()
 	item.m_logo=_T("default.png");
 	item.m_nick_name=_T("duilib群组");
 	item.m_description=_T("234.225.0.4");
-	AddNewGroup(item);
+	AddNewGroup(item);*/
 }
 
 void main_frame::Notify(TNotifyUI& msg)
@@ -108,13 +110,25 @@ void main_frame::Notify(TNotifyUI& msg)
 	//点击消息
 	else if(_tcsicmp(msg.sType,_T("click"))==0)
 	{
-		if(_tcsicmp(sendName,_T("search_tip"))==0)
+		if(_tcsicmp(sendName,PC_MAIN_SERACH_TIP)==0)
 		{
 			msg.pSender->SetVisible(false);
 			CRichEditUI* pControl=static_cast<CRichEditUI*>(m_PaintManager.FindControl(PC_MAIN_SEARCH_EDIT));
 			pControl->SetVisible();
 			pControl->SetText(L"");
 			pControl->SetFocus();
+			return;
+		}
+	}
+	//killfocus消息
+	else if(_tcsicmp(msg.sType,_T("killfocus"))==0)
+	{
+		if(_tcsicmp(sendName,PC_MAIN_SEARCH_EDIT)==0)
+		{
+			msg.pSender->SetVisible(false);
+			CRichEditUI* pControl=static_cast<CRichEditUI*>(m_PaintManager.FindControl(PC_MAIN_SERACH_TIP));
+			pControl->SetVisible();
+			pControl->SetText(SEARCHTITLE);
 			return;
 		}
 	}

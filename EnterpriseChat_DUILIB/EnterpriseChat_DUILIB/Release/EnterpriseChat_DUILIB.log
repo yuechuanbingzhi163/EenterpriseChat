@@ -1,9 +1,11 @@
-﻿生成启动时间为 2015/2/9 9:25:27。
-     1>项目“C:\Users\cass-lm\Documents\Visual Studio 2012\Projects\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB.vcxproj”在节点 2 上(Rebuild 个目标)。
+﻿生成启动时间为 2015/3/3 14:49:54。
+     1>项目“E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt chat_dialog.cpp IOCPModel.cpp main_frame.cpp main.cpp popmenu.cpp TCPModel.cpp UDPModel.cpp
-         chat_dialog.cpp
+         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt changepcinfo.cpp chat_dialog.cpp commonlist.cpp IOCPModel.cpp main_frame.cpp main.cpp popmenu.cpp TCPModel.cpp UDPModel.cpp
+         changepcinfo.cpp
      1>d:\duilib391\duilib\duilib\Control/UIFlash.h(20): warning C4192: 导入类型库“IServiceProvider”时自动排除“ShockwaveFlash.ShockwaveFlash”
+         chat_dialog.cpp
+         commonlist.cpp
          IOCPModel.cpp
          main_frame.cpp
          main.cpp
@@ -13,8 +15,10 @@
        ResourceCompile:
          C:\Program Files (x86)\Windows Kits\8.0\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Release\EnterpriseChat_DUILIB.res" EnterpriseChat_DUILIB.rc 
        Link:
-         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\cass-lm\Documents\Visual Studio 2012\Projects\EnterpriseChat_DUILIB\Release\EnterpriseChat_DUILIB.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\cass-lm\Documents\Visual Studio 2012\Projects\EnterpriseChat_DUILIB\Release\EnterpriseChat_DUILIB.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\cass-lm\Documents\Visual Studio 2012\Projects\EnterpriseChat_DUILIB\Release\EnterpriseChat_DUILIB.lib" /MACHINE:X86 /SAFESEH Release\EnterpriseChat_DUILIB.res
+         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Release\EnterpriseChat_DUILIB.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Release\EnterpriseChat_DUILIB.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Release\EnterpriseChat_DUILIB.lib" /MACHINE:X86 /SAFESEH Release\EnterpriseChat_DUILIB.res
+         Release\changepcinfo.obj
          Release\chat_dialog.obj
+         Release\commonlist.obj
          Release\IOCPModel.obj
          Release\main_frame.obj
          Release\main.obj
@@ -23,9 +27,9 @@
          Release\UDPModel.obj
          正在生成代码
          已完成代码的生成
-         EnterpriseChat_DUILIB.vcxproj -> C:\Users\cass-lm\Documents\Visual Studio 2012\Projects\EnterpriseChat_DUILIB\Release\EnterpriseChat_DUILIB.exe
-     1>已完成生成项目“C:\Users\cass-lm\Documents\Visual Studio 2012\Projects\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB.vcxproj”(Rebuild 个目标)的操作。
+         EnterpriseChat_DUILIB.vcxproj -> E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Release\EnterpriseChat_DUILIB.exe
+     1>已完成生成项目“E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:15.93
+已用时间 00:00:18.79
