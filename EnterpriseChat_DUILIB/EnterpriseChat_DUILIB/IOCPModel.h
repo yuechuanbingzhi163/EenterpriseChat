@@ -127,6 +127,8 @@ public:
 	bool SendUDPMessage(SOCKADDR_IN addr,UDPDATA data,PER_IO_CONTEXT* pIoContext,bool isBlocking=true,bool isAdd=true);
 	//供外部调用的上线信息发送函数
 	bool SendUDPLogOnMessage() { return SendUDPLogOnMessage(m_UDPSendIOContext); }
+	//供外部调用的下线信息发送函数
+	bool SendUDPLogOffMessage() { return SendUDPLogOffMessage(m_UDPSendIOContext); }
 private:
 	//UDP SEND_POST回调函数
 	bool SendUDPMessageCallback(PER_IO_CONTEXT* pIoContext);

@@ -16,10 +16,12 @@
 #define LIST_GROUP   _T("groups")
 
 #define BTN_IMAGE    _T("pctojen")
+#define BTN_CLOSE    _T("closebtn")
 
 #define FRIEND_LOGO         _T("logo")
 #define FRIEND_NAME         _T("nickname")
 #define FRIEND_DESCRIPTION  _T("description")
+
 
 const TCHAR* const SEARCHTITLE=_T("搜索联系人，群组");
 
@@ -117,6 +119,11 @@ void main_frame::Notify(TNotifyUI& msg)
 			pControl->SetVisible();
 			pControl->SetText(L"");
 			pControl->SetFocus();
+			return;
+		}
+		if(_tcsicmp(sendName,BTN_CLOSE)==0)
+		{
+			WndClosing();
 			return;
 		}
 	}
@@ -1296,4 +1303,9 @@ bool main_frame::InitListFloder()
 	item.m_nick_name=_T("我的群组");
 	m_groupParentNode = pListGroup->AddNode(item, NULL);
 	return true;
+}
+
+void main_frame::WndClosing()
+{
+	m_IOCP.SendUDPLogOffMessage();
 }

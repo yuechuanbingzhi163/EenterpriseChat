@@ -56,6 +56,7 @@ public:
 	BOOL AddNotificationIcon(HWND hwnd);
 	BOOL DeleteNotificationIcon(HWND hwnd);
 	bool InitListFloder();
+	void WndClosing();
 private:
 	std::map<DuiLib::CDuiString,chat_dialog*> m_mapChatDlg;
 	DuiLib::CDialogBuilder m_dlgBuilder;

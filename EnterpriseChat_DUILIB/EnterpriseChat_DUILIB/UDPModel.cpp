@@ -125,6 +125,7 @@ bool CUDPModel::SendUDPMessage(PER_IO_CONTEXT* pIoContext)
 		ret=WSAGetLastError();
 		if(WSA_IO_PENDING==ret)
 		{
+			OutputDebugString(L"SendUDPMessage\r\n");
 			return true;
 		}
 		else
@@ -132,6 +133,7 @@ bool CUDPModel::SendUDPMessage(PER_IO_CONTEXT* pIoContext)
 			return false;
 		}
 	}
+	OutputDebugString(L"SendUDPMessage\r\n");
 	return true;
 }
 //接受UDP信息

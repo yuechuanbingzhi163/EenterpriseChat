@@ -107,13 +107,15 @@ bool CIOCPModel::Initialize(SOCKADDR_IN addr)
 	{
 		return false;
 	}
-	//发送上线信息
-	SendUDPLogOnMessage(m_UDPSendIOContext);
+
 	//投递接受操作
 	if(!RecvUDPMessage(m_UDPRecvIOContext))
 	{
 		return false;
 	}
+
+	//发送上线信息
+	SendUDPLogOnMessage(m_UDPSendIOContext);
 	return true;
 }
 //初始化完成端口
@@ -912,6 +914,7 @@ DWORD WINAPI CIOCPModel::WorkerThread(LPVOID lpParam)
 				continue;
 			}
 			//AfxMessageBox(L"GetQueuedCompletionStatus正常！！");
+
 			switch (pIoContext->m_OpType)
 			{
 			case ACCEPT_POSTED:
@@ -921,7 +924,9 @@ DWORD WINAPI CIOCPModel::WorkerThread(LPVOID lpParam)
 				//UDP处理
 				if(pIoContext->m_socketType==SOCKET_TYPE::TYPE_UDP)
 				{
+					OutputDebugString(L"GetQueuedCompletionstatus/UDP-Recv\r\n");
 					pIOCPModel->RecvUDPMessageCallback(pIoContext);
+					
 				}
 				//TCP处理
 				else if(pIoContext->m_socketType==SOCKET_TYPE::TYPE_TCP)
@@ -962,6 +967,7 @@ bool CIOCPModel::SendUDPMessage(SOCKADDR_IN addr,UDPDATA data,PER_IO_CONTEXT* pI
 {
 	list<UDPSENDDATA>::iterator ite=m_listUDPMSG.begin();
 	//UDPDATA中的m_addr结构用于储存用于用户目的地址，在多播中，接受到的地址一定不会是多播地址，因此需要此数据来区分是哪一个多播组
+	addr.sin_port=htons(USER_PORT);
 	data.m_addr=addr;
 	UDPSENDDATA sendData;
 	//队列中没消息，则立即发送消息
@@ -976,6 +982,8 @@ bool CIOCPModel::SendUDPMessage(SOCKADDR_IN addr,UDPDATA data,PER_IO_CONTEXT* pI
 			pIoContext->m_socketType=SOCKET_TYPE::TYPE_UDP;
 			pIoContext->ResetBuffer();
 			memcpy(pIoContext->m_szBuffer,&data,sizeof(data));
+
+			
 			pIoContext->m_wsaBuf.len=sizeof(data);
 			EnterCriticalSection(&m_UDPCritical);//进入临界区，
 			if(isAdd)
@@ -1026,6 +1034,17 @@ bool CIOCPModel::SendUDPMessage(SOCKADDR_IN addr,UDPDATA data,PER_IO_CONTEXT* pI
 bool CIOCPModel::SendUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 {
 	EnterCriticalSection(&m_UDPCritical);
+	UDPDATA *pdata=(UDPDATA*)pIoContext->m_szBuffer;
+	switch (pdata->m_msgType)
+	{
+	case UDPMSGTYPE::LOGOFF:
+		Sleep(100);
+		m_mainDlg->Close();
+		LeaveCriticalSection(&m_UDPCritical);
+		return true;
+	default:
+		break;
+	}
 	list<UDPSENDDATA>::iterator ite=m_listUDPMSG.begin();
 	if(ite==m_listUDPMSG.end())
 	{
@@ -1064,6 +1083,7 @@ bool CIOCPModel::RecvUDPMessage(PER_IO_CONTEXT* pIoContext)
 //UDP接受消息回调函数
 bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 {
+	OutputDebugString(L"dealUDPMessage\r\n");
 	TCHAR strTemp[MAX_PATH]={0};
 	char  cTemp[MAX_PATH]={0};
 	int size=-1;
@@ -1076,6 +1096,7 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 	FriendListItemInfo friendInfo; //好友信息，主要用于上下线消息
 	string strIP; //远端发送方IP
 	string aimIP; //远端发送方发送目标IP，主要用于多播处理，用于区别不同的多播组
+	bool retbool=false;
 	switch (data->m_msgType)
 	{
 		//上线信息
@@ -1101,13 +1122,13 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 			MultiByteToWideChar(0,0,strIP.c_str(),-1,strTemp,size);
 			friendInfo.m_description=CDuiString(strTemp);
 
-			m_mainDlg->AddNewFriend(friendInfo);
+			retbool=m_mainDlg->AddNewFriend(friendInfo);
 
 			sendData.m_msgType=UDPMSGTYPE::LOGON;
 			memcpy(sendData.m_hostName,m_hostName.c_str(),(m_hostName.size()+1)*sizeof(char));
 			memcpy(sendData.m_name,m_name.c_str(),(m_name.size()+1)*sizeof(char));
 			memcpy(sendData.m_image,m_image.c_str(),(m_image.size()+1)*sizeof(char));
-			SendUDPMessage(addr,sendData,pIoContext);
+			retbool=SendUDPMessage(addr,sendData,pIoContext);
 		}
 		break;
 	case UDPMSGTYPE::LOGOFF:
@@ -1115,12 +1136,15 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 		if(true==IsExsitedInFriendsList(pIoContext->m_senderAddr))
 		{
 			strIP=string(inet_ntoa(pIoContext->m_senderAddr.sin_addr));
-			for(list<string>::iterator ite=m_listFriens.begin();ite!=m_listFriens.end();++ite)
+			for(list<string>::iterator ite=m_listFriens.begin();ite!=m_listFriens.end();)
 			{
 				if(*ite==strIP)
 				{
 					m_listFriens.remove(strIP);
+					ite=m_listFriens.begin();
+					continue;
 				}
+				++ite;
 			}
 
 			friendInfo.m_folder=false;
@@ -1268,6 +1292,7 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 		//取消群管理员身份
 		break;
 	default:
+		OutputDebugString(L"测试接收信息\r\n");
 		break;
 	}
 	RecvUDPMessage(pIoContext);

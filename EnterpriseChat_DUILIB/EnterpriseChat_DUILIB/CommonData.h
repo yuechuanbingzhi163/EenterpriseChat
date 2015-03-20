@@ -82,7 +82,7 @@ typedef struct tagPACKAGEHEAD
 //UDP信息类别，分为上线，下线，普通信息，UDP穿透信息
 typedef enum _UDPMSGTYPE
 {
-	LOGON, //上线
+	LOGON=10001, //上线
 	LOGOFF, //下线
 	COMMONPOINT, //普通点对点消息
 	COMMONMULTICAST, //普通群消息
@@ -134,7 +134,7 @@ typedef struct _IPSOCKET
 //异步操作标识
 typedef enum _OPERATION_TYPE  
 {  
-	BROADCASE_POST ,                   //标志投递的是广播操作
+	BROADCASE_POST =1,                   //标志投递的是广播操作
 	ACCEPT_POSTED,                     // 标志投递的Accept操作
 	SEND_POSTED,                       // 标志投递的是发送操作
 	RECV_POSTED,                       // 标志投递的是接收操作
@@ -143,14 +143,14 @@ typedef enum _OPERATION_TYPE
 //套接字类型
 typedef enum _SOCKET_TYPE
 {
-	TYPE_UDP,
+	TYPE_UDP=1,
 	TYPE_TCP,
 	NONE_TYPE
 }SOCKET_TYPE,*PSOCKET_TYPE;
 //异步通信结构用于发送还是接受枚举
 typedef enum _PERIOCONTEXT_TYPE
 {
-	PER_IOCONTEXT_NULL,
+	PER_IOCONTEXT_NULL=1,
 	PER_IOCONTEXT_SEND,
 	PER_IOCONTEXT_ACCEPT,
 	PER_IOCONTEXT_LISTEN
@@ -283,13 +283,13 @@ typedef struct _TCPSENDDATA
 //窗口类型，多播聊天窗口/点对点聊天窗口
 typedef enum _WNDTYPE
 {
-	WND_POINT,
+	WND_POINT=1,
 	WND_MUTLICAST
 }WNDTYPE;
 //文件操作类型
 typedef enum _FILEOPERATIONTYPE
 {
-	FILE_OPE_SEND,
+	FILE_OPE_SEND=1,
 	FILE_OPE_ACCEPT
 }FILEOPERATIONTYPE;
 typedef struct _FILEINFO

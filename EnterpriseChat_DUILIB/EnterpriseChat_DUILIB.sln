@@ -5,7 +5,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EnterpriseChat_DUILIB", "En
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DuiLib", "D:\duilib391\duilib\DuiLib\DuiLib.vcxproj", "{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}"
 EndProject
-Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "Setup", "F:\VS10Project\Setup\Setup.isproj", "{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}"
+Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "Setup", "F:\VS10Project\Setup\Setup.isproj", "{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,20 +46,20 @@ Global
 		{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}.UnicodeDebug|Win32.Build.0 = UnicodeDebug|Win32
 		{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}.UnicodeRelease|Win32.ActiveCfg = UnicodeRelease|Win32
 		{E106ACD7-4E53-4AEE-942B-D0DD426DB34E}.UnicodeRelease|Win32.Build.0 = UnicodeRelease|Win32
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.CD_ROM|Win32.ActiveCfg = CD_ROM
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.CD_ROM|Win32.Build.0 = CD_ROM
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.Debug|Win32.ActiveCfg = SingleImage
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.Debug|Win32.Build.0 = SingleImage
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.DVD-5|Win32.ActiveCfg = DVD-5
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.DVD-5|Win32.Build.0 = DVD-5
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.Release|Win32.ActiveCfg = SingleImage
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.Release|Win32.Build.0 = SingleImage
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.SingleImage|Win32.ActiveCfg = SingleImage
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.SingleImage|Win32.Build.0 = SingleImage
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.UnicodeDebug|Win32.ActiveCfg = SingleImage
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.UnicodeDebug|Win32.Build.0 = SingleImage
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.UnicodeRelease|Win32.ActiveCfg = SingleImage
-		{9DEEF66C-3F3A-461F-8081-BE7F4BC1C902}.UnicodeRelease|Win32.Build.0 = SingleImage
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.CD_ROM|Win32.ActiveCfg = CD_ROM
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.CD_ROM|Win32.Build.0 = CD_ROM
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.Debug|Win32.ActiveCfg = SingleImage
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.Debug|Win32.Build.0 = SingleImage
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.DVD-5|Win32.ActiveCfg = DVD-5
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.DVD-5|Win32.Build.0 = DVD-5
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.Release|Win32.ActiveCfg = SingleImage
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.Release|Win32.Build.0 = SingleImage
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.SingleImage|Win32.ActiveCfg = SingleImage
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.SingleImage|Win32.Build.0 = SingleImage
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.UnicodeDebug|Win32.ActiveCfg = SingleImage
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.UnicodeDebug|Win32.Build.0 = SingleImage
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.UnicodeRelease|Win32.ActiveCfg = SingleImage
+		{D9592735-C7A1-41BA-B98E-6AE99B0EF6DB}.UnicodeRelease|Win32.Build.0 = SingleImage
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
