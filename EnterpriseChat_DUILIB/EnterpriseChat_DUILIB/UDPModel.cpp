@@ -147,11 +147,13 @@ bool CUDPModel::RecvUDPMessage(PER_IO_CONTEXT* pIoContext)
 	pIoContext->m_socketType=SOCKET_TYPE::TYPE_UDP;
 	pIoContext->m_bIsPackageHead=false;
 	pIoContext->m_socket=m_UDPSocket;
+	pIoContext->ResetBuffer();
 	int ret=WSARecvFrom(m_UDPSocket,&pIoContext->m_wsaBuf,1,&dwBytes,&flags,(SOCKADDR*)&pIoContext->m_senderAddr,&size,p_ol,NULL);
 	if(SOCKET_ERROR==ret)
 	{
 		if(WSA_IO_PENDING==WSAGetLastError())
 		{
+			OutputDebugString(L"RecvUDPMsg\r\n");
 			return true;
 		}
 		else
@@ -159,6 +161,7 @@ bool CUDPModel::RecvUDPMessage(PER_IO_CONTEXT* pIoContext)
 			return false;
 		}
 	}
+	OutputDebugString(L"RecvUDPMsg\r\n");
 	return true;
 }
 //卸载UDP模块，清除UDP相关资源

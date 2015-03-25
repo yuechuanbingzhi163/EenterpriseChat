@@ -884,10 +884,12 @@ DWORD WINAPI CIOCPModel::WorkerThread(LPVOID lpParam)
 			PER_IO_CONTEXT* pIoContext = CONTAINING_RECORD(pOverlapped, PER_IO_CONTEXT, m_Overlapped); 
 			if(!pIoContext)
 			{
+				OutputDebugString(L"1.pIoContext is NULL！！！！");
 				continue;
 			}
 			if(pIoContext->m_socket==pIOCPModel->m_UDPModel.GetUDPSocket())
 			{
+				OutputDebugString(L"2.Client Socket is NULL！！！！");
 				TCHAR strTemp[MAX_PATH];
 				memset(strTemp,0,sizeof(strTemp));
 				FriendListItemInfo item;
@@ -910,6 +912,7 @@ DWORD WINAPI CIOCPModel::WorkerThread(LPVOID lpParam)
 			PER_IO_CONTEXT* pIoContext = CONTAINING_RECORD(pOverlapped, PER_IO_CONTEXT, m_Overlapped); 
 			if(dwBytesTransfered==0)
 			{
+				OutputDebugString(L"Client is closed!!!\r\n");
 				pIOCPModel->ClientClose(pIoContext);
 				continue;
 			}
@@ -939,6 +942,7 @@ DWORD WINAPI CIOCPModel::WorkerThread(LPVOID lpParam)
 				//AfxMessageBox(L"发送信息完毕！！");	
 				if(pIoContext->m_socketType==SOCKET_TYPE::TYPE_UDP)
 				{
+					OutputDebugString(L"GetQueuedCompletionstatus/UDP-Send\r\n");
 					pIOCPModel->SendUDPMessageCallback(pIoContext);
 				}
 				//TCP处理
@@ -1006,6 +1010,9 @@ bool CIOCPModel::SendUDPMessage(SOCKADDR_IN addr,UDPDATA data,PER_IO_CONTEXT* pI
 		{
 			if(isAdd)
 			{
+				memset(m_error,0,sizeof(m_error));
+				_swprintf(m_error,L"SendUDPMsg-Blocked,package %d\r\n",m_listUDPMSG.size());
+				OutputDebugString(m_error);
 				sendData.m_addr=addr;
 				sendData.m_UDPData=data;
 				m_listUDPMSG.push_back(sendData);
@@ -1052,6 +1059,9 @@ bool CIOCPModel::SendUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 		return true;
 	}
 	m_listUDPMSG.erase(ite);
+	memset(m_error	,0,sizeof(m_error));
+	_swprintf(m_error,L"SendUDPMessageCallback,package %d\r\n",m_listUDPMSG.size());
+	OutputDebugString(m_error);
 	ite=m_listUDPMSG.begin();
 	if(ite==m_listUDPMSG.end())
 	{
@@ -1083,7 +1093,7 @@ bool CIOCPModel::RecvUDPMessage(PER_IO_CONTEXT* pIoContext)
 //UDP接受消息回调函数
 bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 {
-	OutputDebugString(L"dealUDPMessage\r\n");
+	OutputDebugString(L"RecvUDPMessageCallback\r\n");
 	TCHAR strTemp[MAX_PATH]={0};
 	char  cTemp[MAX_PATH]={0};
 	int size=-1;
@@ -1128,7 +1138,7 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 			memcpy(sendData.m_hostName,m_hostName.c_str(),(m_hostName.size()+1)*sizeof(char));
 			memcpy(sendData.m_name,m_name.c_str(),(m_name.size()+1)*sizeof(char));
 			memcpy(sendData.m_image,m_image.c_str(),(m_image.size()+1)*sizeof(char));
-			retbool=SendUDPMessage(addr,sendData,pIoContext);
+			retbool=SendUDPMessage(addr,sendData,m_UDPSendIOContext);
 		}
 		break;
 	case UDPMSGTYPE::LOGOFF:
@@ -1192,7 +1202,7 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 			memcpy(sendData.m_hostName,m_hostName.c_str(),(m_hostName.size()+1)*sizeof(char));
 			memcpy(sendData.m_name,m_name.c_str(),(m_name.size()+1)*sizeof(char));
 			memcpy(sendData.m_image,m_image.c_str(),(m_image.size()+1)*sizeof(char));
-			SendUDPMessage(addr,sendData,pIoContext);
+			SendUDPMessage(addr,sendData,m_UDPSendIOContext);
 		}
 		m_mainDlg->RecvUDPMessage(inet_ntoa(addr.sin_addr),*data);
 		//普通消息点对点消息
@@ -1224,7 +1234,7 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 			memcpy(sendData.m_hostName,m_hostName.c_str(),(m_hostName.size()+1)*sizeof(char));
 			memcpy(sendData.m_name,m_name.c_str(),(m_name.size()+1)*sizeof(char));
 			memcpy(sendData.m_image,m_image.c_str(),(m_image.size()+1)*sizeof(char));
-			SendUDPMessage(addr,sendData,pIoContext);
+			SendUDPMessage(addr,sendData,m_UDPSendIOContext);
 		}
 		m_mainDlg->RecvUDPMessage(inet_ntoa(data->m_addr.sin_addr),*data);
 		//普通多播消息
@@ -1275,7 +1285,7 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 		memcpy(sendData.m_image,m_image.c_str(),(m_image.size()+1)*sizeof(char));
 		memcpy(sendData.m_message,groupInfo,sizeof(*groupInfo));
 		sendData.m_msgType=UDPMSGTYPE::MULTICAST_QUIT;
-		SendUDPMessage(addr,sendData,pIoContext);
+		SendUDPMessage(addr,sendData,m_UDPSendIOContext);
 		QuitGroup(groupInfo->m_groupIP);
 		//被踢出群消息
 		break;
@@ -1322,6 +1332,7 @@ bool CIOCPModel::SendUDPLogOnMessage(PER_IO_CONTEXT* pIoContext)
 	pIoContext->m_socketType=SOCKET_TYPE::TYPE_UDP;
 	pIoContext->ResetBuffer();
 	memcpy(pIoContext->m_szBuffer,&data,sizeof(data));
+	//m_listUDPMSG.clear();
 	if(!SendUDPMessage(mutlicastAddr,data,pIoContext))
 	{
 		return false;
@@ -1353,6 +1364,7 @@ bool CIOCPModel::SendUDPLogOffMessage(PER_IO_CONTEXT* pIoContext)
 	pIoContext->m_socketType=SOCKET_TYPE::TYPE_UDP;
 	pIoContext->ResetBuffer();
 	memcpy(pIoContext->m_szBuffer,&data,sizeof(data));
+	m_listUDPMSG.clear();
 	if(!SendUDPMessage(mutlicastAddr,data,pIoContext))
 	{
 		return false;
@@ -1518,7 +1530,7 @@ bool CIOCPModel::RecvTCPMessageCallback(PER_IO_CONTEXT* pIoContext,ULONG dwIoSiz
 				memcpy(sendData.m_hostName,m_hostName.c_str(),(m_hostName.size()+1)*sizeof(char));
 				memcpy(sendData.m_name,m_name.c_str(),(m_name.size()+1)*sizeof(char));
 				memcpy(sendData.m_image,m_image.c_str(),(m_image.size()+1)*sizeof(char));
-				SendUDPMessage(addr,sendData,pIoContext);
+				SendUDPMessage(addr,sendData,m_UDPSendIOContext);
 			}
 			m_mainDlg->RecvTCPMessage(pIoContext);
 			if(pIoContext==NULL)

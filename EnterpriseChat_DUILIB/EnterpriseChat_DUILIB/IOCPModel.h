@@ -54,6 +54,7 @@ private:
 	std::string m_image;
 	std::map<LPCTSTR,LPCTSTR> m_iniIPName;					//配置文件中储存的IP、昵称对
 	main_frame* m_mainDlg;
+	TCHAR m_error[MAX_PATH];
 public:
 	//启动
 	bool Start();
