@@ -281,7 +281,8 @@ void main_frame::Notify(TNotifyUI& msg)
 		}
 		if(parent==pFriendControl)
 		{
-			AddNewChatDlg(WND_POINT,pFriendControl);
+			AddNewChatDlg();
+			//AddNewChatDlg(WND_POINT,pFriendControl);
 			return;
 		}
 		else if(parent==pGroupControl)
@@ -554,13 +555,16 @@ bool main_frame::AddNewChatDlg(WNDTYPE type,DuiLib::CListUI* pControl)
 	chatDlg->CenterWindow();
 	chatDlg->SetMainDlg(this);
 	::ShowWindow(chatDlg->GetHWND(),SW_NORMAL);
-
 	m_mapChatDlg.insert(make_pair(strDes,chatDlg));
 	return true;
 }
 
 bool main_frame::AddNewChatDlg(const char* strIP)
 {
+	if(strIP==NULL)
+	{
+		return false;
+	}
 	WNDTYPE type=WNDTYPE::WND_POINT;
 	int size=MultiByteToWideChar(0,0,strIP,-1,0,0);
 	TCHAR *wstr=new TCHAR[size];
@@ -670,7 +674,7 @@ CDuiString main_frame::GetName()
 void main_frame::OnFinalMessage(HWND hWnd)
 {
 	WindowImplBase::OnFinalMessage(hWnd);
-	delete this;
+	//delete this;
 	return;
 }
 
@@ -678,24 +682,18 @@ bool main_frame::RecvUDPMessage(const char* strIP,UDPDATA data)
 {
 	//strIP指的是发送端IP地址结构，data中的m_addr则是目的地址
 	//对于点对点的通信二者是相同的，对于多播，则不同,信息应当传送到m_addr对应的聊天窗口
-	int size=MultiByteToWideChar(0,0,inet_ntoa(data.m_addr.sin_addr),-1,0,0);
+	int size=MultiByteToWideChar(0,0,strIP,-1,0,0);
 	TCHAR *cstrIP=new TCHAR[size];
-	MultiByteToWideChar(0,0,inet_ntoa(data.m_addr.sin_addr),-1,cstrIP,size);
+	MultiByteToWideChar(0,0,strIP,-1,cstrIP,size);
 	CDuiString str(cstrIP);
 	RELEASE(cstrIP);
-	if(m_mapChatDlg.end()==m_mapChatDlg.find(str))
-	{
-		AddNewChatDlg(strIP);
-		RecvUDPMessage(strIP,data);
-		return true;
-	}
 	chat_dialog* chatDlg=m_mapChatDlg.find(str)->second;
 	if(chatDlg==NULL)
 	{
 		return false;
 	}
 	size=MultiByteToWideChar(0,0,data.m_message,-1,0,0);
-	TCHAR *cMsg=new TCHAR(size);
+	TCHAR *cMsg=new TCHAR[size];
 	MultiByteToWideChar(0,0,data.m_message,-1,cMsg,size);
 	CDuiString msg(cMsg);
 	RELEASE(cMsg);
@@ -926,6 +924,7 @@ CListContainerElementUI* main_frame::GetElementByDescription(CDuiString descript
 		{
 			continue;
 		}
+		CDuiString ip=pLabel->GetText();
 		if(_tcsicmp(pLabel->GetText(),description)==0)
 		{
 			pElement=pTemp;
@@ -1243,6 +1242,9 @@ LRESULT main_frame::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
 		DeleteNotificationIcon(GetHWND());
 		bHandled=FALSE;
 		return 0;
+	case WM_CREATECHATDLG:
+		AddNewChatDlg((char*)wParam);
+		return 0;
 	default:break;
 	}
 	bHandled=FALSE;
@@ -1308,4 +1310,20 @@ bool main_frame::InitListFloder()
 void main_frame::WndClosing()
 {
 	m_IOCP.SendUDPLogOffMessage();
+}
+
+bool main_frame::isExsitedWnd(const char* strIP)
+{
+	bool retbool=false;
+	int size=MultiByteToWideChar(0,0,strIP,-1,0,0);
+	TCHAR *cstrIP=new TCHAR[size];
+	MultiByteToWideChar(0,0,strIP,-1,cstrIP,size);
+	CDuiString str(cstrIP);
+	RELEASE(cstrIP);
+	if(m_mapChatDlg.end()==m_mapChatDlg.find(str))
+	{
+		return retbool;
+	}
+	retbool=true;
+	return retbool;
 }

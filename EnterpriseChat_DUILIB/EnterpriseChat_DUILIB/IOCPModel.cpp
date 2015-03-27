@@ -1176,6 +1176,7 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 		}
 		break;
 	case UDPMSGTYPE::COMMONPOINT:
+		//普通消息点对点消息
 		if(false==IsExsitedInFriendsList(pIoContext->m_senderAddr))
 		{
 			strIP=string(inet_ntoa(pIoContext->m_senderAddr.sin_addr));
@@ -1204,8 +1205,12 @@ bool CIOCPModel::RecvUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 			memcpy(sendData.m_image,m_image.c_str(),(m_image.size()+1)*sizeof(char));
 			SendUDPMessage(addr,sendData,m_UDPSendIOContext);
 		}
+		if(!m_mainDlg->isExsitedWnd(inet_ntoa(addr.sin_addr)))
+		{
+			SendMessage(m_mainDlg->GetHWND(),WM_CREATECHATDLG,(WPARAM)inet_ntoa(addr.sin_addr),NULL);
+		}
+		OutputDebugString(L"即将进入RecvUDPMessage");
 		m_mainDlg->RecvUDPMessage(inet_ntoa(addr.sin_addr),*data);
-		//普通消息点对点消息
 		break;
 	case UDPMSGTYPE::COMMONMULTICAST:
 		if(false==IsExsitedInFriendsList(pIoContext->m_senderAddr))

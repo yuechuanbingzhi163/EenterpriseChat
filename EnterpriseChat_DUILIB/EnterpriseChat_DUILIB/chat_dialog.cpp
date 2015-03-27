@@ -86,14 +86,14 @@ void chat_dialog::InitWindow()
 	SetIsHaveFile(false);
 	SetIsGroupChatDlg(m_type);
 
-	RecvMessage(_T("一语成谶"),_T("耶耶耶我i万i万i万i万i万i"));
-	RecvMessage(_T("一语成谶"),_T("哈哈哈哈哈哈哈哈哈哈哈哈"));
-	RecvMessage(_T("c:\\desktop\\wini\\create\\init\\dddddddd.xml"),_T("send"),TCPMSGTYPE::FILE_STOP);
-	RecvMessage(_T("一语成谶"),_T("滴答滴答滴答滴答滴答"));
-	RecvMessage(_T("一语成谶"),_T("哈哈哈哈哈哈哈哈哈哈哈哈"));
-	TCPDATA data;
-	data.m_fileLen=5000;
-	memcpy(data.m_fileName,"c:\\desktop\\wini.xml",sizeof("c:\\desktop\\wini.xml"));
+	//RecvMessage(_T("一语成谶"),_T("耶耶耶我i万i万i万i万i万i"));
+	//RecvMessage(_T("一语成谶"),_T("哈哈哈哈哈哈哈哈哈哈哈哈"));
+	//RecvMessage(_T("c:\\desktop\\wini\\create\\init\\dddddddd.xml"),_T("send"),TCPMSGTYPE::FILE_STOP);
+	//RecvMessage(_T("一语成谶"),_T("滴答滴答滴答滴答滴答"));
+	//RecvMessage(_T("一语成谶"),_T("哈哈哈哈哈哈哈哈哈哈哈哈"));
+	//TCPDATA data;
+	//data.m_fileLen=5000;
+	//memcpy(data.m_fileName,"c:\\desktop\\wini.xml",sizeof("c:\\desktop\\wini.xml"));
 	//AddNewFileItem(data,FILEOPERATIONTYPE::FILE_OPE_SEND,NULL);
 	//AddNewFileItem(data,FILEOPERATIONTYPE::FILE_OPE_ACCEPT,NULL);
 	/*for(int i=0;i<10;++i)
