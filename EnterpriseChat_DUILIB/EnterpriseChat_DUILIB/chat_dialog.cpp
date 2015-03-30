@@ -78,6 +78,7 @@ void chat_dialog::InitWindow()
 	SetBGI(m_BGI);
 	SetLogo(m_logo);
 	SetName(m_name);
+	SetDescription(m_description);
 
 	AllowMeesageForVistaAbove(SPI_SETANIMATION, MSGFLT_ADD);
 	AllowMeesageForVistaAbove(WM_DROPFILES, MSGFLT_ADD);

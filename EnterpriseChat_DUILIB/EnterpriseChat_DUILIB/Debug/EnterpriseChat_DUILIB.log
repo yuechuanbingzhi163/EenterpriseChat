@@ -1,8 +1,8 @@
-﻿生成启动时间为 2015/3/27 16:53:36。
+﻿生成启动时间为 2015/3/30 8:58:29。
      1>项目“E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt main_frame.cpp
-         main_frame.cpp
+         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt chat_dialog.cpp
+         chat_dialog.cpp
        Link:
          D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.lib" /MACHINE:X86 Debug\EnterpriseChat_DUILIB.res
          Debug\changepcinfo.obj
@@ -19,4 +19,4 @@
 
 生成成功。
 
-已用时间 00:00:05.58
+已用时间 00:00:09.71
