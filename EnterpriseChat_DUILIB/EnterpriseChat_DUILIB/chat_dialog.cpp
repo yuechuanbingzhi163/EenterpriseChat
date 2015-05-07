@@ -1,6 +1,8 @@
 ﻿#include "main_frame.h"
 #include "chat_dialog.h"
 #include <Shlobj.h>
+//#include "audiovideolib.h"
+
 
 
 
@@ -41,6 +43,8 @@
 
 using namespace DuiLib;
 using namespace std;
+//using namespace avl;
+//using namespace cv;
 
 chat_dialog::chat_dialog(WNDTYPE type,CDuiString BGI,CDuiString logo,CDuiString name,CDuiString description):
 	m_mainDlg(NULL),
@@ -233,6 +237,7 @@ void chat_dialog::Notify(DuiLib::TNotifyUI& msg)
 			return;
 		}
 	}
+
 	__super::Notify(msg);
 }
 

@@ -73,7 +73,7 @@ void main_frame::InitWindow()
 
 	InitListFloder();
 
-	/*FriendListItemInfo item;
+	FriendListItemInfo item;
 	item.m_folder=false;
 	item.m_empty=false;
 	item.m_logo=_T("man_big.png");
@@ -81,10 +81,11 @@ void main_frame::InitWindow()
 	item.m_nick_name=_T("123456789");
 	AddNewFriend(item);
 
+	
 	item.m_logo=_T("default.png");
 	item.m_nick_name=_T("duilibÈº×é");
 	item.m_description=_T("234.225.0.4");
-	AddNewGroup(item);*/
+	AddNewGroup(item);
 }
 
 void main_frame::Notify(TNotifyUI& msg)
@@ -295,6 +296,13 @@ void main_frame::Notify(TNotifyUI& msg)
 			return;
 		}
 	}
+
+
+	/*if(_tcsicmp(sendName,L"audiomsg")==0)
+	{
+		OutputDebugString(msg.sType+L"\r\n");
+		return;
+	}*/
 	__super::Notify(msg);
 }
 
