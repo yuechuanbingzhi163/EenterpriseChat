@@ -59,6 +59,10 @@
                         <Option name="italicbtn" text="{i Italic.png}{/i}" width="22" height="22" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" showhtml="true" align="center" hotimage="file=&apos;btn_hot.png&apos; corner=&apos;2,3,2,2&apos;" selectedimage="file=&apos;btn_push.png&apos; corner=&apos;2,5,2,2&apos;" />
                         <Option name="underlinebtn" text="{i underline.png}{/i}" width="22" height="22" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" showhtml="true" align="center" hotimage="file=&apos;btn_hot.png&apos; corner=&apos;2,3,2,2&apos;" selectedimage="file=&apos;btn_push.png&apos; corner=&apos;2,5,2,2&apos;" />
                         <Option name="colorbtn" text="{i color.png}{/i}" width="22" height="22" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" showhtml="true" align="center" hotimage="file=&apos;btn_hot.png&apos; corner=&apos;2,3,2,2&apos;" selectedimage="file=&apos;btn_push.png&apos; corner=&apos;2,5,2,2&apos;" />
+						 <Control width="20" />
+						<Button name="audiobtn" text="发送语音消息" tooltip="长按录音" width="80" height="22"  bkimage="file=&apos;unsel.bmp&apos;" maxheight="24" maxwidth="80" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" hotimage="file=&apos;btn_hot.png&apos; corner=&apos;2,3,2,2&apos;" pushedimage="file=&apos;btn_push.png&apos; corner=&apos;2,5,2,2&apos;" />
+						<Control width="10" />
+						<Button name="videobtn" text="视频" tooltip="视频" width="80" height="22"  bkimage="file=&apos;unsel.bmp&apos;" maxheight="24" maxwidth="80" textcolor="#FF000000" disabledtextcolor="#FFA7A6AA" align="center" hotimage="file=&apos;btn_hot.png&apos; corner=&apos;2,3,2,2&apos;" pushedimage="file=&apos;btn_push.png&apos; corner=&apos;2,5,2,2&apos;" />
                     </HorizontalLayout>
                     <HorizontalLayout height="80" bkcolor="#FFFFFFFF" inset="5,0,0,0">
                         <RichEdit name="input_richedit" multiline="true" vscrollbar="true" autovscroll="true" enabled="true" rich="false" readonly="false" wantreturn="true" wantctrlreturn="false" />

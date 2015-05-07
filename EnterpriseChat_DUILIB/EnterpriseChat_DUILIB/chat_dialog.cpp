@@ -1,7 +1,7 @@
 ﻿#include "main_frame.h"
 #include "chat_dialog.h"
 #include <Shlobj.h>
-//#include "audiovideolib.h"
+#include "audiovideolib.h"
 
 
 
@@ -41,10 +41,13 @@
 #define STATE_FILE_ACCEPT _T("接受")
 #define STATE_FILE_FINISH _T("完成")
 
+#define AUDIO_CONTROL _T("audiobtn")
+#define VIDEO_CONTROL _T("videobtn")
+
 using namespace DuiLib;
 using namespace std;
-//using namespace avl;
-//using namespace cv;
+using namespace avl;
+using namespace cv;
 
 chat_dialog::chat_dialog(WNDTYPE type,CDuiString BGI,CDuiString logo,CDuiString name,CDuiString description):
 	m_mainDlg(NULL),
@@ -742,4 +745,57 @@ BOOL chat_dialog::AllowMeesageForVistaAbove(UINT uMessageID, BOOL bAllow)
 	}
 
 	return bResult;
+}
+
+
+LRESULT chat_dialog::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled)
+{
+	bHandled=FALSE;
+	CControlUI* pAudioCtrl=NULL;
+
+	CPoint point;
+	RECT rect;
+
+	switch(uMsg)
+	{
+	case WM_LBUTTONDOWN:
+		//OutputDebugString(L"wm_lbuttondown");
+		point.x = LOWORD(lParam);
+		point.y = HIWORD(lParam);
+		pAudioCtrl=m_PaintManager.FindControl(AUDIO_CONTROL);
+		if(pAudioCtrl==NULL)
+		{
+			break;
+		}
+		rect = pAudioCtrl->GetPos();
+		if(IsPointInRect(point,rect))
+		{
+			OutputDebugString(L"audiobtn\r\n");
+			caudio::GetInstance()->WaveInWork();
+			pAudioCtrl->SetText(L"语音...");
+
+		}
+		break;
+	case WM_LBUTTONUP:
+		OutputDebugString(L"wm_lbuttonup\r\n");
+		caudio::GetInstance()->WaveInStopWorking();
+		pAudioCtrl=m_PaintManager.FindControl(AUDIO_CONTROL);
+		if(pAudioCtrl!=NULL)
+		{
+			pAudioCtrl->SetText(L"发送录音消息");
+		}
+		break;
+	default: break;
+	}
+	return 0;
+}
+
+
+const bool chat_dialog::IsPointInRect(const DuiLib::CPoint point,const RECT rect)
+{
+	if(rect.left<=point.x&&rect.right>=point.x&&rect.top<=point.y&&rect.bottom>=point.y)
+	{
+		return true;
+	}
+	return false;
 }

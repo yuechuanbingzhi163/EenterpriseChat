@@ -1,26 +1,13 @@
-﻿生成启动时间为 2015/5/7 10:23:20。
-     1>项目“E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB.vcxproj”在节点 2 上(Rebuild 个目标)。
+﻿生成启动时间为 2015/5/7 16:43:11。
+     1>项目“E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt changepcinfo.cpp chat_dialog.cpp commonlist.cpp IOCPModel.cpp main_frame.cpp main.cpp popmenu.cpp TCPModel.cpp UDPModel.cpp
-         UDPModel.cpp
-     1>d:\duilib391\duilib\duilib\control\uiflash.h(20): warning C4192: 导入类型库“IServiceProvider”时自动排除“ShockwaveFlash.ShockwaveFlash”
-         TCPModel.cpp
-         popmenu.cpp
-         main.cpp
-         main_frame.cpp
-         IOCPModel.cpp
-     1>e:\github\eenterprisechat\enterprisechat_duilib\enterprisechat_duilib\iocpmodel.cpp(1014): warning C4996: '_swprintf': This function or variable may be unsafe. Consider using _swprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 d:\program files (x86)\microsoft visual studio 11.0\vc\include\wchar.h(784) : 参见“_swprintf”的声明
-     1>e:\github\eenterprisechat\enterprisechat_duilib\enterprisechat_duilib\iocpmodel.cpp(1063): warning C4996: '_swprintf': This function or variable may be unsafe. Consider using _swprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-                 d:\program files (x86)\microsoft visual studio 11.0\vc\include\wchar.h(784) : 参见“_swprintf”的声明
-         commonlist.cpp
+         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt chat_dialog.cpp
          chat_dialog.cpp
-         changepcinfo.cpp
-         正在生成代码...
-       ResourceCompile:
-         C:\Program Files (x86)\Windows Kits\8.0\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Debug\EnterpriseChat_DUILIB.res" EnterpriseChat_DUILIB.rc 
+     1>e:\opencv\opencv\build\include\opencv2\core\mat.hpp(1965): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\opencv\opencv\build\include\opencv2\core\persistence.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\opencv\opencv\build\include\opencv2\core\utility.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
        Link:
-         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.lib" /MACHINE:X86 Debug\EnterpriseChat_DUILIB.res
+         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.exe" /INCREMENTAL /NOLOGO opencv_ts300.lib opencv_world300.lib IlmImf.lib libjasper.lib libjpeg.lib libpng.lib AudioVedioLib.lib libtiff.lib libwebp.lib opencv_calib3d300.lib opencv_core300.lib opencv_features2d300.lib opencv_flann300.lib opencv_highgui300.lib opencv_imgcodecs300.lib opencv_imgproc300.lib opencv_ml300.lib opencv_objdetect300.lib opencv_photo300.lib opencv_shape300.lib opencv_stitching300.lib opencv_superres300.lib opencv_video300.lib opencv_videoio300.lib opencv_videostab300.lib zlib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.lib" /MACHINE:X86 Debug\EnterpriseChat_DUILIB.res
          Debug\changepcinfo.obj
          Debug\chat_dialog.obj
          Debug\commonlist.obj
@@ -31,8 +18,8 @@
          Debug\TCPModel.obj
          Debug\UDPModel.obj
          EnterpriseChat_DUILIB.vcxproj -> E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\EnterpriseChat_DUILIB.exe
-     1>已完成生成项目“E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB.vcxproj”(Rebuild 个目标)的操作。
+     1>已完成生成项目“E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB\EnterpriseChat_DUILIB.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:27.69
+已用时间 00:00:06.41

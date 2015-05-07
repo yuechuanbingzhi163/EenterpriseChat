@@ -20,6 +20,7 @@ public:
 	virtual void OnFinalMessage(HWND hWnd);
 	virtual void DropFileOnDlg(HDROP hDrop);  
 	virtual LRESULT HandleMessage(UINT uMsg, WPARAM wParam, LPARAM lParam);
+	virtual LRESULT HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam, BOOL& bHandled);
 public:
 	BOOL AllowMeesageForVistaAbove(UINT uMessageID, BOOL bAllow);
 	void SetMainDlg(main_frame* mainDlg) { m_mainDlg=mainDlg; }
@@ -38,6 +39,7 @@ public:
 	bool SetIsHaveFile(bool haveFile);
 	void SetIsGroupChatDlg(WNDTYPE type);
 	DuiLib::CControlUI* GetGoalCtrl(DuiLib::CControlUI* srcCtrl,LPCTSTR className);
+	const bool IsPointInRect(const DuiLib::CPoint,const RECT rect); 
 private:
 	main_frame* m_mainDlg;
 	DuiLib::CDuiString m_BGI;
