@@ -44,6 +44,8 @@
 #define AUDIO_CONTROL _T("audiobtn")
 #define VIDEO_CONTROL _T("videobtn")
 
+
+#define SENDAUDIOMSG_TIMER 1001
 using namespace DuiLib;
 using namespace std;
 using namespace avl;
@@ -772,6 +774,7 @@ LRESULT chat_dialog::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam
 		{
 			OutputDebugString(L"audiobtn\r\n");
 			caudio::GetInstance()->WaveInWork();
+			SetTimer(GetHWND(),SENDAUDIOMSG_TIMER,50,NULL);
 			pAudioCtrl->SetText(L"语音...");
 
 		}
@@ -785,6 +788,22 @@ LRESULT chat_dialog::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam
 			pAudioCtrl->SetText(L"发送录音消息");
 		}
 		break;
+	case WM_TIMER:
+		switch (wParam)
+		{
+		case SENDAUDIOMSG_TIMER:
+			{
+				if(!caudio::GetInstance()->IsWaveInWorking())
+				{
+					caudio::GetInstance()->WaveOutWork();
+					//cvideo::GetInstance()->OpenVideoCapture();
+					KillTimer(GetHWND(),SENDAUDIOMSG_TIMER);
+				}
+			}
+		default:
+			break;
+		}
+		bHandled=TRUE;
 	default: break;
 	}
 	return 0;

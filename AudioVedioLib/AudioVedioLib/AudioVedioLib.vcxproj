@@ -45,6 +45,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>E:\openCV\opencv\build\include\opencv2;E:\openCV\opencv\build\include;E:\openCV\opencv\build\include\opencv;$(IncludePath)</IncludePath>
     <LibraryPath>E:\openCV\opencv\build\x86\vc11\staticlib;E:\openCV\opencv\build\x86\vc11\lib;$(LibraryPath)</LibraryPath>
+    <OutDir>..\lib</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

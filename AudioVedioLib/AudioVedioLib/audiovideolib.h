@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #ifdef AUDIO_VEDIO_LIB
 #else
 #define AUDIO_VEDIO_LIB  _declspec(dllimport)
@@ -12,14 +12,36 @@
 
 
 
-#define BUFFER_SIZE (44100*16*2/8*10)    // Â¼ÖÆÉùÒô³¤¶È  
-#define FRAGMENT_SIZE 1024              // »º´æÇø´óĞ¡  
+
+#define BUFFER_SIZE (44100*16*2/8*10)    // å½•åˆ¶å£°éŸ³é•¿åº¦  
+#define FRAGMENT_SIZE 1024              // ç¼“å­˜åŒºå¤§å°  
 #define FRAGMENT_NUM 4     
 
 const TCHAR  STOPEVENT[]=L"STOP_EVENT";
 
+
+
+
+
 namespace avl
 {
+	typedef void (*WAVEINFINISHPROC)(LPVOID lParam);
+
+	class  AUDIO_VEDIO_LIB caudio;
+
+	struct WAVEINTHREADPARA
+	{
+		caudio* m_instance;
+		WAVEINFINISHPROC m_proc;
+		LPVOID* m_para;
+		WAVEINTHREADPARA()
+		{
+			m_instance=NULL;
+			m_proc=NULL;
+			m_para=NULL;
+		}
+	};
+
 	class AUDIO_VEDIO_LIB caudio
 	{
 	public:
@@ -28,7 +50,7 @@ namespace avl
 		void WaveInWork();
 		void WaveInStopWorking();
 		void WaveOutWork();
-		const bool IsWaveInWorking();
+		bool IsWaveInWorking();
 	private:
 		caudio(void);
 		static DWORD CALLBACK ThreadWaveIn(LPVOID lParam);
@@ -39,14 +61,14 @@ namespace avl
 		HWAVEIN m_wavein;
 		HWAVEIN m_waveout;
 		WAVEHDR m_wh[FRAGMENT_NUM];
-		bool m_isWaveInWorking;     //ÊÇ·ñÕıÔÚÂ¼Òô
+		bool m_isWaveInWorking;     //æ˜¯å¦æ­£åœ¨å½•éŸ³
 	private:
-		static caudio* sm_instance; //µ«ÊµÀı¶ÔÏó
-		static int sm_bufcount;     //µ±Ç°Â¼ÒôÈİÆ÷Ê¹ÓÃÁ¿£¬×Ö½Ú
-		static char sm_buffer[BUFFER_SIZE]; //Â¼Òô²¨ĞÎÈİÆ÷
-		static HANDLE m_event;      //Í£Ö¹Â¼ÒôÊÂ¼ş¶ÔÏó
-		static bool sm_enable;      //ÊÇ·ñ¿ÉÒÔÌí¼ÓWAVEHDR
-		static int sm_waveoutcount;  //²¥·ÅÂ¼ÒôÁ¿£¬×Ö½Ú
+		static caudio* sm_instance; //ä½†å®ä¾‹å¯¹è±¡
+		static int sm_bufcount;     //å½“å‰å½•éŸ³å®¹å™¨ä½¿ç”¨é‡ï¼Œå­—èŠ‚
+		static char sm_buffer[BUFFER_SIZE]; //å½•éŸ³æ³¢å½¢å®¹å™¨
+		static HANDLE m_event;      //åœæ­¢å½•éŸ³äº‹ä»¶å¯¹è±¡
+		static bool sm_enable;      //æ˜¯å¦å¯ä»¥æ·»åŠ WAVEHDR
+		static int sm_waveoutcount;  //æ’­æ”¾å½•éŸ³é‡ï¼Œå­—èŠ‚
 	};
 
 	class AUDIO_VEDIO_LIB cvideo
@@ -54,7 +76,9 @@ namespace avl
 	public:
 		static cvideo* GetInstance();
 		bool OpenVideoCapture();
+		bool OpenVideoCapture(const char* filename);
 		void CloseVideoCapture();
+		void PlayVideo(HDC hDC, RECT rect);
 		cv::Mat GetFrame();
 		void DrawToHDC(cv::Mat mat, HDC hDC, RECT rect);
 		void SetDelay(int delay);
@@ -63,10 +87,10 @@ namespace avl
 		cvideo();
 		static DWORD CALLBACK ThreadOpenVideoCapture(LPVOID lParam);
 	private:
-		static cvideo* sm_instance; //µ¥ÊµÀı
-		HANDLE m_stopEvent;         //Í£Ö¹ÉãÏñÍ·ÊÂ¼ş¶ÔÏó
-		int  m_delay;				//»ñÈ¡ÉãÏñÍ·Ö¡¼ä¸ô
-		cv::VideoCapture* m_camera; //videoÉè±¸¶ÔÏó
+		static cvideo* sm_instance; //å•å®ä¾‹
+		HANDLE m_stopEvent;         //åœæ­¢æ‘„åƒå¤´äº‹ä»¶å¯¹è±¡
+		int  m_delay;				//è·å–æ‘„åƒå¤´å¸§é—´éš”
+		cv::VideoCapture* m_camera; //videoè®¾å¤‡å¯¹è±¡
 	};
 }
 

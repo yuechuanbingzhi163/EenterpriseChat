@@ -1,0 +1,21 @@
+﻿生成启动时间为 2015/5/8 14:46:39。
+     1>项目“E:\GitHub\EenterpriseChat\AudioVedioLib\AudioVedioLib\AudioVedioLib.vcxproj”在节点 2 上(Build 个目标)。
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(346,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _USRDLL /D AUDIOVEDIOLIB_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt audiovideolib.cpp
+         audiovideolib.cpp
+     1>d:\duilib391\duilib\duilib\Control/UIFlash.h(20): warning C4192: 导入类型库“IServiceProvider”时自动排除“ShockwaveFlash.ShockwaveFlash”
+     1>E:\openCV\opencv\build\include\opencv2/core/mat.hpp(1965): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>E:\openCV\opencv\build\include\opencv2/core/persistence.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>E:\openCV\opencv\build\include\opencv2/core/utility.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\GitHub\EenterpriseChat\AudioVedioLib\\lib\AudioVedioLib.dll" /INCREMENTAL:NO /NOLOGO opencv_ts300.lib opencv_world300.lib IlmImf.lib libjasper.lib libjpeg.lib libpng.lib libtiff.lib libwebp.lib opencv_calib3d300.lib opencv_core300.lib opencv_features2d300.lib opencv_flann300.lib opencv_highgui300.lib opencv_imgcodecs300.lib opencv_imgproc300.lib opencv_ml300.lib opencv_objdetect300.lib opencv_photo300.lib opencv_shape300.lib opencv_stitching300.lib opencv_superres300.lib opencv_video300.lib opencv_videoio300.lib opencv_videostab300.lib zlib.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\GitHub\EenterpriseChat\AudioVedioLib\\lib\AudioVedioLib.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\GitHub\EenterpriseChat\AudioVedioLib\\lib\AudioVedioLib.lib" /MACHINE:X86 /SAFESEH /DLL Release\audiovideolib.obj
+            正在创建库 E:\GitHub\EenterpriseChat\AudioVedioLib\\lib\AudioVedioLib.lib 和对象 E:\GitHub\EenterpriseChat\AudioVedioLib\\lib\AudioVedioLib.exp
+         正在生成代码
+         已完成代码的生成
+         AudioVedioLib.vcxproj -> E:\GitHub\EenterpriseChat\AudioVedioLib\\lib\AudioVedioLib.dll
+     1>已完成生成项目“E:\GitHub\EenterpriseChat\AudioVedioLib\AudioVedioLib\AudioVedioLib.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:05.65

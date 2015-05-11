@@ -1,16 +1,20 @@
-﻿生成启动时间为 2015/5/7 16:45:14。
-     1>项目“E:\GitHub\EenterpriseChat\AudioVedioLib\AudioVedioLib\AudioVedioLib.vcxproj”在节点 2 上(Build 个目标)。
+﻿生成启动时间为 2015/5/11 17:18:18。
+     1>项目“E:\GitHub\EenterpriseChat\AudioVedioLib\AudioVedioLib\AudioVedioLib.vcxproj”在节点 3 上(Build 个目标)。
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V110\Microsoft.CppBuild.targets(346,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
      1>ClCompile:
          D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D AUDIOVEDIOLIB_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt audiovideolib.cpp
          audiovideolib.cpp
      1>e:\opencv\opencv\build\include\opencv2\core\mat.hpp(1965): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
      1>e:\opencv\opencv\build\include\opencv2\core\persistence.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
      1>e:\opencv\opencv\build\include\opencv2\core\utility.hpp : warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失
+     1>e:\github\eenterprisechat\audiovediolib\audiovediolib\audiovideolib.cpp(454): warning C4244: “初始化”: 从“double”转换到“long”，可能丢失数据
+     1>e:\github\eenterprisechat\audiovediolib\audiovediolib\audiovideolib.cpp(461): warning C4244: “初始化”: 从“double”转换到“int”，可能丢失数据
        Link:
-         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\AudioVedioLib.dll" /INCREMENTAL /NOLOGO opencv_ts300d.lib opencv_world300d.lib IlmImfd.lib libjasperd.lib libjpegd.lib libpngd.lib libtiffd.lib libwebpd.lib opencv_calib3d300d.lib opencv_core300d.lib opencv_features2d300d.lib opencv_flann300d.lib opencv_highgui300d.lib opencv_imgcodecs300d.lib opencv_imgproc300d.lib opencv_ml300d.lib opencv_objdetect300d.lib opencv_photo300d.lib opencv_shape300d.lib opencv_stitching300d.lib opencv_superres300d.lib opencv_video300d.lib opencv_videoio300d.lib opencv_videostab300d.lib zlibd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\AudioVedioLib.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\AudioVedioLib.lib" /MACHINE:X86 /DLL Debug\audiovideolib.obj
-         AudioVedioLib.vcxproj -> E:\GitHub\EenterpriseChat\EnterpriseChat_DUILIB\Debug\AudioVedioLib.dll
+         D:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\lib\AudioVedioLib.dll" /INCREMENTAL /NOLOGO opencv_ts300d.lib opencv_world300d.lib IlmImfd.lib libjasperd.lib libjpegd.lib libpngd.lib libtiffd.lib libwebpd.lib opencv_calib3d300d.lib opencv_core300d.lib opencv_features2d300d.lib opencv_flann300d.lib opencv_highgui300d.lib opencv_imgcodecs300d.lib opencv_imgproc300d.lib opencv_ml300d.lib opencv_objdetect300d.lib opencv_photo300d.lib opencv_shape300d.lib opencv_stitching300d.lib opencv_superres300d.lib opencv_video300d.lib opencv_videoio300d.lib opencv_videostab300d.lib zlibd.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"..\lib\AudioVedioLib.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\lib\AudioVedioLib.lib" /MACHINE:X86 /DLL Debug\audiovideolib.obj
+            正在创建库 ..\lib\AudioVedioLib.lib 和对象 ..\lib\AudioVedioLib.exp
+         AudioVedioLib.vcxproj -> E:\GitHub\EenterpriseChat\AudioVedioLib\AudioVedioLib\..\lib\AudioVedioLib.dll
      1>已完成生成项目“E:\GitHub\EenterpriseChat\AudioVedioLib\AudioVedioLib\AudioVedioLib.vcxproj”(Build 个目标)的操作。
 
 生成成功。
 
-已用时间 00:00:05.77
+已用时间 00:00:06.18

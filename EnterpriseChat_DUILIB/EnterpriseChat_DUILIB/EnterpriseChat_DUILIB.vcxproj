@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>E:\GitHub\EenterpriseChat\AudioVedioLib\AudioVedioLib;E:\openCV\opencv\build\include\opencv2;E:\openCV\opencv\build\include;E:\openCV\opencv\build\include\opencv;D:\duilib391\duilib\DuiLib;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\GitHub\EenterpriseChat\AudioVedioLib\lib;C:\Users\cass-lm\Documents\Visual Studio 2012\Projects\AudioVedioLib\lib;E:\openCV\opencv\build\x86\vc11\lib;E:\openCV\opencv\build\x86\vc11\staticlib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>E:\GitHub\EenterpriseChat\AudioVedioLib\lib;E:\openCV\opencv\build\x86\vc11\lib;E:\openCV\opencv\build\x86\vc11\staticlib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

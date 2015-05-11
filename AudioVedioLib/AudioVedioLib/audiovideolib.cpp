@@ -4,6 +4,7 @@
 #include "audiovideolib.h"
 using namespace avl;
 using namespace cv;
+using namespace std;
 
 #pragma comment(lib,"winmm.lib")
 
@@ -46,6 +47,10 @@ caudio* caudio::GetInstance()
 
 void caudio::WaveInWork()
 {
+	/*WAVEINTHREADPARA threadparam;
+	threadparam.m_instance=this;
+	threadparam.m_proc=proc;
+	threadparam.m_para=NULL;*/
 	CloseHandle(CreateThread(NULL,0,ThreadWaveIn,this,0,NULL));
 }
 
@@ -65,7 +70,12 @@ void caudio::WaveOutWork()
 DWORD CALLBACK caudio::ThreadWaveIn(LPVOID lParam)
 {
 
-	caudio *instance=(caudio*)lParam;
+	/*WAVEINTHREADPARA *threadparam=(WAVEINTHREADPARA*)lParam;
+	if(threadparam==NULL)
+	{
+		return -1;
+	}*/
+	caudio* instance=(caudio*)lParam;
 	if(instance==NULL)
 	{
 		return -1;
@@ -163,7 +173,11 @@ DWORD CALLBACK caudio::ThreadWaveIn(LPVOID lParam)
 		waveInUnprepareHeader(instance->m_wavein, &instance->m_wh[i], sizeof(WAVEHDR));  
 		delete instance->m_wh[i].lpData;  
 	}  
-	waveInClose(instance->m_wavein); 
+	/*waveInClose(instance->m_wavein); 
+	if(threadparam->m_proc!=NULL)
+	{
+		threadparam->m_proc(threadparam->m_para);
+	}*/
 	instance->m_isWaveInWorking=false;
 	OutputDebugString(L"waveInClose\r\n");
 	return 0;
@@ -258,9 +272,18 @@ void CALLBACK caudio::WaveOutProc(  HWAVEOUT hwo, UINT uMsg,DWORD_PTR dwInstance
 	}  
 }  
 
-const bool caudio::IsWaveInWorking()
+ bool caudio::IsWaveInWorking()
 {
-	return m_isWaveInWorking;
+	bool retbool=false;
+	if( m_isWaveInWorking)
+	{
+		retbool = true;
+	}
+	else
+	{
+		retbool = false;
+	}
+	return  retbool;
 }
 
 cvideo::cvideo()
@@ -368,6 +391,12 @@ bool cvideo::OpenVideoCapture()
 	return true;*/
 }
 
+bool cvideo::OpenVideoCapture(const char* filename)
+{
+	m_camera =new VideoCapture(filename); //将视频加载到设备中
+	return m_camera->isOpened();
+}
+
 void cvideo::CloseVideoCapture()
 {
 	if(m_camera->isOpened())
@@ -413,8 +442,37 @@ Mat cvideo::GetFrame()
 	Mat frame;
 	if(m_camera->isOpened())
 	{
-		(*m_camera) >> frame;
+		m_camera->read (frame);
 	}
 	return frame;
+}
+
+void cvideo::PlayVideo(HDC hDC, RECT rect)
+{
+	int framecount=0;
+
+	long totalFrameNumber=m_camera->get(CAP_PROP_FRAME_COUNT); //获取视频文件总帧数
+
+	m_camera->set(CAP_PROP_POS_FRAMES,0);  //设置为视频当前帧
+
+	
+	double fps = m_camera->get(CAP_PROP_FPS);
+	
+	int delay=1000/fps;
+	
+	//int kernel_size = 3;  
+   // Mat kernel = Mat::ones(kernel_size,kernel_size,CV_32F)/(float)(kernel_size*kernel_size);  
+
+	while(framecount<totalFrameNumber)
+	{
+		Mat frame;
+		if(!m_camera->read(frame))
+		{
+			break;
+		}
+		DrawToHDC(frame,hDC,rect);
+		Sleep(delay);
+	}
+	m_camera->release();
 }
 

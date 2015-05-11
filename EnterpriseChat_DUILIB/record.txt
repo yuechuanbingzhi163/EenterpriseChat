@@ -1,0 +1,20 @@
+一、IOCP模型：
+1.udp模块：
+负责udp基础通信。包括UDPModel.h。
+①.bool Initialize(SOCKADDR_IN):初始化UDP套接字，设置套接字支持广播，多播，设置端口重用，传播范围，关闭多播回环，将UDP套接字绑定到SOCKADDR_IN指定的ip和端口。成功返回true，失败返回false。
+②.bool JoinMutliCast(SOCKADDR_IN):加入到SOCKADDR_IN指定的多播组。成功返回true，失败返回false。
+③.bool LeaveMultiCast(SOCKADDR_IN):离开SOCKADDR_IN指定的多播组,关闭多播组关联的套接字。成功返回true，失败返回false。
+④.bool SendUDPMessage(PER_IO_CONTEXT*):投递UDP发送信息操作。成功返回true，失败返回false。
+⑤.bool RecvUDPMessage(PER_IO_CONTEXT*):投递UDP接受信息操作。成功返回true，失败返回false。
+⑥.bool Unistall():卸载UDP模块,离开已经加入的多播组，关闭多播组关联套接字和UDP套接字。成功返回true，失败返回false。
+⑦.bool AssociateWithIOCP(HANDLE):将UDP套接字绑定到指定的完成端口。成功返回true，失败返回false。
+*注意：UDP模块包含成员变量有用于UDP通信的套接和多播地址-多播套接字组，在卸载时只负责退出多播组，关闭多播套接字和UDP通信套接字。发送和接受信息操作使用的上下文，由调用者提供，因此销毁工作也由调用者完成。
+2.tcp模块：
+负责tcp基础通信。包括TCPModel.h
+bool Initialize(SOCKADDR_IN):初始化TCP套接字,将TCP套接字绑定到SOCKADDR_IN指定的ip和端口。成功返回true，失败返回false。
+bool Uninstall():卸载TCP模块,关闭TCP套接字。成功返回true，失败返回false。
+bool AssociateWithIOCP(HANDLE):将TCP套接与指定完成端口绑定。成功返回true，失败返回false。
+bool AcceptTCPConnect(PER_IO_CONTEXT):投递AcceptEx操作。成功返回true，失败返回false。
+*注意：tcp模块包含成员变量只有TCP套接字，卸载时也只关闭该套接字。其投递AcceptEx操作所使用的上下文由调用者提供，特别需要指出的是，tcp发送和接受操作都由另一模块iocp实现，这是因为，tcp通信主要用于文件传输，其过程需要精确控制，若实现在本模块中，客户端通信套接字必须要定义为public，一方面不利于类的封装，更重要的是，在结束通信时关闭套接字及释放其关联使用的资源须保持一致，而使用的资源变量都定义在了iocp模块。
+3.iocp模块：
+整个模型的核心模块，负责完成端口的初始化和销毁。既负责调用udp、tcp基础模块建立起通信模型，又负责开放接口，供给界面程序获取各种信息。指定和实现UDP发送接受协议规则，实现TCP接受发送操作，定义接受发送规则。同时，也负责其TCP、UDP通信上下文，以及其他各种资源的分配，使用和销毁。
