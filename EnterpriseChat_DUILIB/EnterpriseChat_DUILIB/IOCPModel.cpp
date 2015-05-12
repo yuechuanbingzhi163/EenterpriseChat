@@ -83,6 +83,7 @@ bool CIOCPModel::Initialize(SOCKADDR_IN addr)
 	InitializeCriticalSection(&m_UDPCritical);
 	InitializeCriticalSection(&m_TCPCritical);
 	InitializePC(addr);
+	m_threadQiutEvent=CreateEvent(NULL,TRUE,FALSE,THREADQUITEVENT);
 	if(!InitializeCompletionPort())
 	{
 		return false;
@@ -185,6 +186,10 @@ bool CIOCPModel::InitializeTCP(SOCKADDR_IN addr)
 //卸载程序模块
 bool CIOCPModel::Uninstall()
 {
+	if(!UninstallCompletionPort())
+	{
+		return false;
+	}
 	if(!UninstallUDP())
 	{
 		return false;
@@ -193,21 +198,22 @@ bool CIOCPModel::Uninstall()
 	{
 		return false;
 	}
-	if(!UninstallCompletionPort())
-	{
-		return false;
-	}
 	return true;
 }
 //卸载完成端口
 bool CIOCPModel::UninstallCompletionPort()
 {
-	for(int i=0;i<m_nThreads*2;++i)
+	SetEvent(m_threadQiutEvent);
+	for(int i=0;i<=m_nThreads;++i)
 	{
 		PostQueuedCompletionStatus(m_IOCompletionPort,0,(DWORD)EXIT_CODE,NULL);
 	}
 	WaitForMultipleObjects(m_nThreads,m_workerThreads,TRUE,INFINITE);
-	for(int i=0;i<=m_nThreads;++i)
+	/*if(WAIT_OBJECT_0 == WaitForSingleObject(m_workerThreads[0],INFINITE))
+	{
+	;
+	}*/
+	for(int i=0;i<m_nThreads;++i)
 	{
 		RELEASE_HANDLE(m_workerThreads[i]);
 	}
@@ -222,6 +228,7 @@ bool CIOCPModel::UninstallUDP()
 	{
 		return false;
 	}
+	m_listTCPSendData.clear();
 	RELEASE(m_UDPRecvIOContext);
 	RELEASE(m_UDPSendIOContext);
 	return true;
@@ -238,8 +245,19 @@ bool CIOCPModel::UninstallTCP()
 	{
 
 		pIoContext=*ite;
-		shutdown(pIoContext->m_socket,SD_BOTH);
-		closesocket(pIoContext->m_socket);
+		
+		if(SOCKET_ERROR == shutdown(pIoContext->m_socket,SD_BOTH))
+		{
+			if(10057 != WSAGetLastError())
+			{
+				return false;
+			}
+		}
+		if(SOCKET_ERROR == closesocket(pIoContext->m_socket))
+		{
+			return false;
+		}
+		pIoContext->m_socket=INVALID_SOCKET;
 		m_listListenData.erase(ite);
 		RELEASE(pIoContext);
 		ite=m_listListenData.begin();
@@ -843,15 +861,23 @@ DWORD WINAPI CIOCPModel::WorkerThread(LPVOID lpParam)
 	THREADPARAMS_WORKER* pParam = (THREADPARAMS_WORKER*)lpParam;
 	CIOCPModel* pIOCPModel = (CIOCPModel*)pParam->pIOCPModel;
 	int nThreadNo = (int)pParam->nThreadNo;
+	TCHAR quitStr[MAX_PATH];
+	memset(quitStr,0,sizeof(quitStr));
+	swprintf_s(quitStr,L"%d号线程启动！\r\n",nThreadNo);
+	OutputDebugString(quitStr);
 
 	OVERLAPPED           *pOverlapped = NULL;
 	SOCKET	              *pSocket=NULL;
 	DWORD                dwBytesTransfered = 0;
-	while(true)
+	while(WAIT_OBJECT_0!=WaitForSingleObject(pIOCPModel->m_threadQiutEvent,0))
 	{
 		BOOL bReturn=GetQueuedCompletionStatus(pIOCPModel->m_IOCompletionPort,&dwBytesTransfered,(PULONG_PTR)&pSocket,
 			&pOverlapped,INFINITE);
 
+		/*TCHAR quitStr[MAX_PATH];
+		memset(quitStr,0,sizeof(quitStr));
+		swprintf_s(quitStr,L"%d号线程工作！\r\n",nThreadNo);
+		OutputDebugString(quitStr);*/
 		//AfxMessageBox(L"取回信息！！");
 		if(EXIT_CODE==pSocket)
 		{
@@ -929,7 +955,7 @@ DWORD WINAPI CIOCPModel::WorkerThread(LPVOID lpParam)
 				{
 					OutputDebugString(L"GetQueuedCompletionstatus/UDP-Recv\r\n");
 					pIOCPModel->RecvUDPMessageCallback(pIoContext);
-					
+
 				}
 				//TCP处理
 				else if(pIoContext->m_socketType==SOCKET_TYPE::TYPE_TCP)
@@ -959,6 +985,9 @@ DWORD WINAPI CIOCPModel::WorkerThread(LPVOID lpParam)
 		}
 	}
 	RELEASE(pParam);
+	memset(quitStr,0,sizeof(quitStr));
+	swprintf_s(quitStr,L"%d号线程退出！\r\n",nThreadNo);
+	OutputDebugString(quitStr);
 	return 0;
 }
 /***************************************/
@@ -987,7 +1016,7 @@ bool CIOCPModel::SendUDPMessage(SOCKADDR_IN addr,UDPDATA data,PER_IO_CONTEXT* pI
 			pIoContext->ResetBuffer();
 			memcpy(pIoContext->m_szBuffer,&data,sizeof(data));
 
-			
+
 			pIoContext->m_wsaBuf.len=sizeof(data);
 			EnterCriticalSection(&m_UDPCritical);//进入临界区，
 			if(isAdd)
@@ -1011,7 +1040,7 @@ bool CIOCPModel::SendUDPMessage(SOCKADDR_IN addr,UDPDATA data,PER_IO_CONTEXT* pI
 			if(isAdd)
 			{
 				memset(m_error,0,sizeof(m_error));
-				_swprintf(m_error,L"SendUDPMsg-Blocked,package %d\r\n",m_listUDPMSG.size());
+				swprintf_s(m_error,L"SendUDPMsg-Blocked,package %d\r\n",m_listUDPMSG.size());
 				OutputDebugString(m_error);
 				sendData.m_addr=addr;
 				sendData.m_UDPData=data;
@@ -1046,7 +1075,7 @@ bool CIOCPModel::SendUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 	{
 	case UDPMSGTYPE::LOGOFF:
 		Sleep(100);
-		m_mainDlg->Close();
+		PostMessage(m_mainDlg->GetHWND(),WM_AFTERCLOSEMSG,NULL,NULL);
 		LeaveCriticalSection(&m_UDPCritical);
 		return true;
 	default:
@@ -1060,7 +1089,7 @@ bool CIOCPModel::SendUDPMessageCallback(PER_IO_CONTEXT* pIoContext)
 	}
 	m_listUDPMSG.erase(ite);
 	memset(m_error	,0,sizeof(m_error));
-	_swprintf(m_error,L"SendUDPMessageCallback,package %d\r\n",m_listUDPMSG.size());
+	swprintf_s(m_error,L"SendUDPMessageCallback,package %d\r\n",m_listUDPMSG.size());
 	OutputDebugString(m_error);
 	ite=m_listUDPMSG.begin();
 	if(ite==m_listUDPMSG.end())

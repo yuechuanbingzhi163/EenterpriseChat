@@ -58,8 +58,15 @@ bool CTCPModel::Initialize(SOCKADDR_IN addr)
 //关闭TCP套接字
 bool CTCPModel::Uninstall()
 {
-	shutdown(m_TCPSocket,SD_BOTH);
-	closesocket(m_TCPSocket);
+	if(SOCKET_ERROR == shutdown(m_TCPSocket,SD_BOTH)&&10057 != WSAGetLastError())//10057错误为套接字无连接，监听套接字应为连接
+	{
+		return false;
+	}
+	if(SOCKET_ERROR == closesocket(m_TCPSocket))
+	{
+		return false;
+	}
+	m_TCPSocket=INVALID_SOCKET;
 	return true;
 }
 //将套接字绑定到完成端口

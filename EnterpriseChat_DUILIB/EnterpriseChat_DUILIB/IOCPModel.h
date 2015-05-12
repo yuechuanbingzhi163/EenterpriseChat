@@ -50,6 +50,7 @@ private:
 	std::string m_strIP;
 	std::string m_hostName;
 	std::string m_name;
+	HANDLE m_threadQiutEvent;
 	//窗体相关变量
 	std::string m_image;
 	std::map<LPCTSTR,LPCTSTR> m_iniIPName;					//配置文件中储存的IP、昵称对
@@ -89,8 +90,10 @@ private:
 	bool InitializeUDP(SOCKADDR_IN addr);
 	//初始化TCP相关
 	bool InitializeTCP(SOCKADDR_IN addr);
+public:
 	//卸载程序模块
 	bool Uninstall();
+private:
 	//卸载完成端口
 	bool UninstallCompletionPort();
 	//卸载UDP相关

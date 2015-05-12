@@ -63,6 +63,7 @@ bool CUDPModel::Initialize(SOCKADDR_IN addr)
 		closesocket(m_UDPSocket);
 		return false;
 	}
+
 	return true;
 }
 //加入一个多播组
@@ -74,8 +75,10 @@ bool CUDPModel::JoinMutliCast(SOCKADDR_IN addr)
 		return false;
 	}
 	IPSOCKET data;
+	string strip = string((inet_ntoa(addr.sin_addr)));
+	int size = (strip.size()+1)*sizeof(char);
 	memset(&data,0,sizeof(data));
-	memcpy(data.m_ip,inet_ntoa(addr.sin_addr),sizeof(inet_ntoa(addr.sin_addr)));
+	memcpy(data.m_ip,strip.c_str(),size);
 	data.m_socket=logSocket;
 	m_listIPSocket.push_back(data);
 	return true;
@@ -86,7 +89,7 @@ bool CUDPModel::LeaveMutliCast(SOCKADDR_IN addr)
 	IP_MREQ ipMerq;
 	memset(&ipMerq,0,sizeof(ipMerq));
 	ipMerq.imr_multiaddr.S_un.S_addr=addr.sin_addr.S_un.S_addr;
-	ipMerq.imr_multiaddr.S_un.S_addr=inet_addr(INADDR_ANY);
+	ipMerq.imr_multiaddr.S_un.S_addr=htonl(INADDR_ANY);
 	int ret=setsockopt(m_UDPSocket,IPPROTO_IP,IP_DROP_MEMBERSHIP,(char*)&ipMerq,sizeof(ipMerq));
 	if(SOCKET_ERROR==ret)
 	{
@@ -172,19 +175,29 @@ bool CUDPModel::Uninstall()
 	for(list<IPSOCKET>::iterator ite=m_listIPSocket.begin();ite!=m_listIPSocket.end();)
 	{
 		ipMerq.imr_multiaddr.S_un.S_addr=inet_addr(ite->m_ip);
-		ipMerq.imr_multiaddr.S_un.S_addr=inet_addr(INADDR_ANY);
+		ipMerq.imr_interface.S_un.S_addr=htonl(INADDR_ANY);
 		int ret=setsockopt(m_UDPSocket,IPPROTO_IP,IP_DROP_MEMBERSHIP,(char*)&ipMerq,sizeof(ipMerq));
 		if(SOCKET_ERROR==ret)
 		{
 			return false;
 		}
-		shutdown(ite->m_socket,SD_BOTH);
-		closesocket(ite->m_socket);
+		//shutdown(ite->m_socket,SD_BOTH);
+		//closesocket(ite->m_socket);
 		m_listIPSocket.erase(ite);
 		ite=m_listIPSocket.begin();
 	}
-	shutdown(m_UDPSocket,SD_BOTH);
-	closesocket(m_UDPSocket);
+	
+	if(SOCKET_ERROR == shutdown(m_UDPSocket,SD_BOTH))
+	{
+		int errorcode= WSAGetLastError();
+		return false;
+	}
+	
+	if(SOCKET_ERROR == closesocket(m_UDPSocket))
+	{
+		return false;
+	}
+	m_UDPSocket=INVALID_SOCKET;
 	return true;
 }
 //将套接字绑定到完成端口

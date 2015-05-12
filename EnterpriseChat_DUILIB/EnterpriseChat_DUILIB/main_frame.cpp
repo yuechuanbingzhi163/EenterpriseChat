@@ -1253,6 +1253,10 @@ LRESULT main_frame::HandleCustomMessage(UINT uMsg, WPARAM wParam, LPARAM lParam,
 	case WM_CREATECHATDLG:
 		AddNewChatDlg((char*)wParam);
 		return 0;
+	case WM_AFTERCLOSEMSG:
+		m_IOCP.Uninstall();
+		this->Close();
+		return 0;
 	default:break;
 	}
 	bHandled=FALSE;
